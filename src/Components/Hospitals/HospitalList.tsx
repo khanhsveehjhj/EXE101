@@ -17,6 +17,11 @@ const HospitalList = () => {
     searchTerm: '',
   });
 
+  // Scroll về đầu trang khi mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
+
   // Get unique specialties from all hospitals
   const allSpecialties = Array.from(
     new Set(state.hospitals.flatMap(hospital => hospital.specialties))
