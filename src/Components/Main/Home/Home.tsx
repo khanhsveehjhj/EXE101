@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '@/Context/AppContext';
 import Button from '@/Components/UI/Button';
 import hero from '@/assets/images/hero.png';
 import DescNums from './DescNums';
 import SectionWrapper from '../SectionWrapper';
+import { useEffect } from 'react';
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { state } = useApp();
 
   const handleBookingClick = () => {
@@ -16,6 +18,13 @@ const Home = () => {
       navigate('/hospitals'); // Will show login modal when trying to book
     }
   };
+
+  useEffect(() => {
+    if (location.state && location.state.forceReload) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location.state]);
+
 
   return (
     <SectionWrapper id="home">

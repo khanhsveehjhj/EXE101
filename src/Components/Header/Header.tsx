@@ -1,6 +1,6 @@
 import Logo from '@/assets/Images/favicon_transparent.png';
 import NavBar from './NavBar';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SelectedPage } from '@/Components/Shared/Types';
 import { useApp } from '@/Context/AppContext';
@@ -10,78 +10,77 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = useApp();
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(
-    SelectedPage.Home
-  );
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home);
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const flexBetween = 'flex items-center justify-between';
   const lastHashRef = useRef('');
 
-  useEffect(() => {
+  // Scroll detection
+  useLayoutEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setIsTopOfPage(true);
-      }
-      if (window.scrollY !== 0) setIsTopOfPage(false);
+      setIsTopOfPage(window.scrollY === 0);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const updateSelectedPage = () => {
-      if (location.pathname !== '/') {
-        // Đang ở route khác, dùng pathname như cũ
-        switch (location.pathname) {
-          case '/':
-            setSelectedPage(SelectedPage.Home);
-            break;
-          case '/hospitals':
-            setSelectedPage(SelectedPage.Hospitals);
-            break;
-          case '/booking':
-            setSelectedPage(SelectedPage.Booking);
-            break;
-          case '/dashboard':
-            setSelectedPage(SelectedPage.Hospitals);
-            break;
-          default:
-            setSelectedPage(SelectedPage.Home);
-        }
-        lastHashRef.current = '';
-      } else {
-        // Đang ở trang chủ, dùng hash nếu có
-        const hash = window.location.hash.replace('#', '') || localStorage.getItem('lastSection') || '';
-        if (hash) {
-          lastHashRef.current = hash;
-        }
-        switch (hash || lastHashRef.current) {
-          case 'services':
-            setSelectedPage(SelectedPage.Services);
-            break;
-          case 'doctors':
-            setSelectedPage(SelectedPage.Doctors);
-            break;
-          case 'reviews':
-            setSelectedPage(SelectedPage.Reviews);
-            break;
-          default:
-            setSelectedPage(SelectedPage.Home);
-        }
+  // Detect route-based pages (not homepage)
+  useLayoutEffect(() => {
+    if (location.pathname !== '/') {
+      switch (true) {
+        case location.pathname === '/':
+          setSelectedPage(SelectedPage.Home);
+          break;
+        case location.pathname.startsWith('/hospitals'):
+        case location.pathname.startsWith('/hospital'):
+          setSelectedPage(SelectedPage.Hospitals);
+          break;
+        case location.pathname === '/booking':
+          setSelectedPage(SelectedPage.Booking);
+          break;
+        case location.pathname === '/dashboard':
+          setSelectedPage(SelectedPage.Hospitals);
+          break;
+        default:
+          setSelectedPage(SelectedPage.Home);
       }
-    };
-
-    updateSelectedPage();
-    window.addEventListener('hashchange', updateSelectedPage);
-    return () => window.removeEventListener('hashchange', updateSelectedPage);
+      lastHashRef.current = '';
+    }
   }, [location.pathname]);
+
+  // Detect hash-based anchors when on homepage
+  useLayoutEffect(() => {
+    if (location.pathname === '/') {
+      const rawHash = window.location.hash.replace('#', '');
+      const hash = rawHash || localStorage.getItem('lastSection') || '';
+  
+      switch (hash) {
+        case 'services':
+          setSelectedPage(SelectedPage.Services);
+          break;
+        case 'doctors':
+          setSelectedPage(SelectedPage.Doctors);
+          break;
+        case 'reviews':
+          setSelectedPage(SelectedPage.Reviews);
+          break;
+        case 'featured-hospitals':
+          setSelectedPage(SelectedPage.Hospitals);
+          break;
+        default:
+          setSelectedPage(SelectedPage.Home);
+      }
+    }
+  }, [location.pathname]);
+  
 
   const handleOpenLoginModal = () => {
     setIsLoginModalOpen(true);
   };
 
-  useEffect(() => {
+  // Cleanup last section
+  useLayoutEffect(() => {
     localStorage.removeItem('lastSection');
   }, []);
 
@@ -99,8 +98,10 @@ const Header = () => {
           onClick={() => {
             if (location.pathname === '/') {
               window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.history.replaceState(null, '', '/');
             } else {
-              navigate('/');
+              localStorage.setItem('homeScrollTo', 'home');
+              navigate('/', { state: { forceReload: Date.now() } });
             }
           }}
         />

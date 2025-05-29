@@ -51,6 +51,7 @@ const Main = () => {
     return () => window.removeEventListener('hashchange', scrollToHash);
   }, []);
 
+
   return (
     <div className="m-auto max-w-[1250px] px-5 md:px-16">
       <Home />

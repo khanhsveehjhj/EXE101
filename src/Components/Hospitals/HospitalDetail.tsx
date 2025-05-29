@@ -36,7 +36,12 @@ const HospitalDetail = () => {
         navigate('/hospitals');
       }
     }
-  }, [id, state.hospitals, selectHospital, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, state.hospitals, navigate]);
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: 'auto'});
+  }, []);           
 
   if (!hospital) {
     return (
@@ -54,7 +59,7 @@ const HospitalDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background py-8 mt-10">
       {/* Hero Section */}
       <div className="relative h-64 md:h-80">
         <img
