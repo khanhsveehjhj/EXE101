@@ -2,6 +2,7 @@ import { SelectedPage } from '@/Components/Shared/Types';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { useApp } from '@/Context/AppContext';
+import React from 'react';
 
 type Props = {
   page: string;
@@ -28,82 +29,47 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
   const mappedData = pageMapping[page];
   const pageId = mappedData?.page || page.toLowerCase().replace(/\s+/g, '') as SelectedPage;
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  // Handler cho <button>
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setSelectedPage(pageId);
 
-    // Nếu là mục Trang chủ
+    // Trang chủ
     if (page === 'Trang chủ') {
       e.preventDefault();
       if (location.pathname === '/') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.history.replaceState(null, '', '/');
       } else {
-        navigate('/', { replace: false });
+        localStorage.setItem('homeScrollTo', 'home');
+        navigate('/');
       }
       return;
     }
 
-    // Nếu là mục Bệnh viện
+    // Bệnh viện
     if (page === 'Bệnh viện') {
       e.preventDefault();
       if (location.pathname === '/') {
-        // Nếu đã ở trang chủ, scroll luôn
         const el = document.getElementById('featured-hospitals');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // Nếu chưa ở trang chủ, chuyển về trang chủ rồi scroll
-        navigate('/', { replace: false });
-        setTimeout(() => {
-          const el = document.getElementById('featured-hospitals');
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 300);
+        localStorage.setItem('homeScrollTo', 'featured-hospitals');
+        navigate('/');
       }
       return;
     }
 
-    // Nếu là mục Dịch vụ
-    if (page === 'Dịch vụ') {
-      e.preventDefault();
-      if (location.pathname === '/') {
-        // Nếu đã ở trang chủ, scroll luôn
-        const el = document.getElementById('services');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // Nếu chưa ở trang chủ, chuyển về trang chủ rồi scroll
-        navigate('/', { replace: false });
-        setTimeout(() => {
-          const el = document.getElementById('services');
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 300);
-      }
-      return;
-    }
-
-    // Nếu là mục Bác sĩ, Đánh giá
-    if (["Bác sĩ", "Đánh giá"].includes(page)) {
+    // Dịch vụ, Bác sĩ, Đánh giá
+    if (page === 'Dịch vụ' || page === 'Bác sĩ' || page === 'Đánh giá') {
       e.preventDefault();
       const sectionId = pageId;
-      if (location.pathname === '/') {
-        // Nếu đã ở trang chủ, scroll luôn
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // Nếu chưa ở trang chủ, chuyển về trang chủ với anchor hash
-        window.location.href = '/#' + sectionId;
-      }
+      // Luôn lưu vào localStorage và chuyển về trang chủ
+      localStorage.setItem('homeScrollTo', sectionId);
+      navigate('/');
       return;
     }
 
-    // Nếu là route-based page khác, navigate như cũ
+    // Các route khác
     if (mappedData?.route) {
       navigate(mappedData.route);
       return;
@@ -112,8 +78,8 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
     // Nếu KHÔNG ở trang chủ, chuyển về trang chủ rồi scroll
     if (location.pathname !== '/') {
       e.preventDefault();
-      navigate('/', { replace: false });
-      // Đợi chuyển trang xong rồi scroll
+      localStorage.setItem('homeScrollTo', pageId);
+      navigate('/');
       setTimeout(() => {
         const el = document.getElementById(pageId);
         if (el) {
@@ -122,7 +88,12 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
         }
       }, 100);
     }
-    // Nếu đã ở trang chủ, để AnchorLink xử lý bình thường
+  };
+
+  // Handler cho <AnchorLink>
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    setSelectedPage(pageId);
+    // ... logic cũ nếu cần ...
   };
 
   // Dynamic colors based on scroll position
@@ -150,72 +121,14 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
             ? linkColors.active
             : linkColors.inactive
         } transition font-bold text-lg duration-500 ${linkColors.hover}`}
-        onClick={(e) => {
-          setSelectedPage(pageId);
-
-          // Trang chủ
-          if (page === 'Trang chủ') {
-            e.preventDefault();
-            if (location.pathname === '/') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-              navigate('/', { replace: false });
-            }
-            return;
-          }
-
-          // Bệnh viện
-          if (page === 'Bệnh viện') {
-            e.preventDefault();
-            if (location.pathname === '/') {
-              const el = document.getElementById('featured-hospitals');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            } else {
-              navigate('/', { replace: false });
-              setTimeout(() => {
-                const el = document.getElementById('featured-hospitals');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 800);
-            }
-            return;
-          }
-
-          // Dịch vụ, Bác sĩ, Đánh giá
-          if (page === 'Dịch vụ' || page === 'Bác sĩ' || page === 'Đánh giá') {
-            e.preventDefault();
-            const sectionId = pageId;
-            if (location.pathname === '/') {
-              const el = document.getElementById(sectionId);
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-                window.history.replaceState(null, '', '/');
-              }
-            } else {
-              navigate('/', { replace: false });
-              setTimeout(() => {
-                const el = document.getElementById(sectionId);
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth' });
-                  window.history.replaceState(null, '', '/');
-                }
-              }, 100);
-            }
-            return;
-          }
-
-          // Các route khác
-          if (mappedData?.route) {
-            navigate(mappedData.route);
-            return;
-          }
-        }}
+        onClick={handleButtonClick}
       >
         {page}
       </button>
     );
   }
 
-  // For anchor-based pages, use AnchorLink
+  // For anchor-based pages, use AnchorLink (chỉ cho các mục khác)
   return (
     <AnchorLink
       className={`${

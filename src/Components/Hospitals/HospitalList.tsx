@@ -17,9 +17,20 @@ const HospitalList = () => {
     searchTerm: '',
   });
 
-  // Scroll về đầu trang khi mount
+  // Scroll về đầu trang khi mount và scroll đến section nếu có hospitalListScrollTo
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
+    const sectionId = localStorage.getItem('hospitalListScrollTo');
+    if (sectionId) {
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          window.history.replaceState(null, '', '/hospitals');
+        }
+        localStorage.removeItem('hospitalListScrollTo');
+      }, 200);
+    }
   }, []);
 
   // Get unique specialties from all hospitals
@@ -57,7 +68,7 @@ const HospitalList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen bg-background py-8 mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
