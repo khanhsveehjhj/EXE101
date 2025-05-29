@@ -27,21 +27,16 @@ const HospitalDetail = () => {
       const foundHospital = state.hospitals.find(h => h.id === id);
       if (foundHospital) {
         setHospital(foundHospital);
-        // Chỉ gọi selectHospital nếu hospital khác với selectedHospital hiện tại
-        if (!state.selectedHospital || state.selectedHospital.id !== foundHospital.id) {
-          selectHospital(foundHospital);
-        }
+        selectHospital(foundHospital);
+        
+        // Get doctors for this hospital
+        const doctors = mockDoctors.filter(doctor => doctor.hospitalId === id);
+        setHospitalDoctors(doctors);
       } else {
         navigate('/hospitals');
       }
     }
-    // KHÔNG đưa selectHospital vào dependency array nếu nó là hàm stable từ context
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, state.hospitals, navigate]);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+  }, [id, state.hospitals, selectHospital, navigate]);
 
   if (!hospital) {
     return (
@@ -59,7 +54,7 @@ const HospitalDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8 mt-10">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="relative h-64 md:h-80">
         <img

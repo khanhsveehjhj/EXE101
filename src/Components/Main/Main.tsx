@@ -51,20 +51,6 @@ const Main = () => {
     return () => window.removeEventListener('hashchange', scrollToHash);
   }, []);
 
-  useEffect(() => {
-    const sectionId = localStorage.getItem('homeScrollTo');
-    if (sectionId) {
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-          window.history.replaceState(null, '', '/');
-        }
-        localStorage.removeItem('homeScrollTo');
-      }, 200);
-    }
-  }, []);
-
   return (
     <div className="m-auto max-w-[1250px] px-5 md:px-16">
       <Home />

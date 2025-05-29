@@ -33,18 +33,21 @@ const Header = () => {
     const updateSelectedPage = () => {
       if (location.pathname !== '/') {
         // Đang ở route khác, dùng pathname như cũ
-        if (location.pathname === '/') {
-          setSelectedPage(SelectedPage.Home);
-        } else if (location.pathname === '/hospitals') {
-          setSelectedPage(SelectedPage.Hospitals);
-        } else if (location.pathname === '/booking') {
-          setSelectedPage(SelectedPage.Booking);
-        } else if (location.pathname === '/dashboard') {
-          setSelectedPage(SelectedPage.Hospitals);
-        } else if (location.pathname.startsWith('/hospital/')) {
-          setSelectedPage(SelectedPage.Hospitals);
-        } else {
-          setSelectedPage(SelectedPage.Home);
+        switch (location.pathname) {
+          case '/':
+            setSelectedPage(SelectedPage.Home);
+            break;
+          case '/hospitals':
+            setSelectedPage(SelectedPage.Hospitals);
+            break;
+          case '/booking':
+            setSelectedPage(SelectedPage.Booking);
+            break;
+          case '/dashboard':
+            setSelectedPage(SelectedPage.Hospitals);
+            break;
+          default:
+            setSelectedPage(SelectedPage.Home);
         }
         lastHashRef.current = '';
       } else {
@@ -96,9 +99,7 @@ const Header = () => {
           onClick={() => {
             if (location.pathname === '/') {
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              window.history.replaceState(null, '', '/');
             } else {
-              localStorage.setItem('homeScrollTo', 'home');
               navigate('/');
             }
           }}
