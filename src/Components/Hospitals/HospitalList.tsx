@@ -17,6 +17,11 @@ const HospitalList = () => {
     searchTerm: '',
   });
 
+  // Scroll về đầu trang khi mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
+
   // Get unique specialties from all hospitals
   const allSpecialties = Array.from(
     new Set(state.hospitals.flatMap(hospital => hospital.specialties))
@@ -52,7 +57,7 @@ const HospitalList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen bg-background py-8 mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">

@@ -13,12 +13,11 @@ import {
   StarIcon,
   MapPinIcon
 } from '@heroicons/react/24/outline';
+import { useEffect } from 'react';
 
 const Main = () => {
   const navigate = useNavigate();
   const { state } = useApp();
-
-
 
   const handleFindHospitals = () => {
     navigate('/hospitals');
@@ -27,6 +26,31 @@ const Main = () => {
   const handleBookAppointment = () => {
     navigate('/hospitals');
   };
+
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+          // Không xóa hash để giữ trạng thái url
+        }, 400);
+      }
+    };
+
+    // Gọi khi mount
+    scrollToHash();
+
+    // Lắng nghe sự kiện hashchange
+    window.addEventListener('hashchange', scrollToHash);
+
+    // Cleanup
+    return () => window.removeEventListener('hashchange', scrollToHash);
+  }, []);
+
 
   return (
     <div className="m-auto max-w-[1250px] px-5 md:px-16">
