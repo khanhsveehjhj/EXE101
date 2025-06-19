@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   MagnifyingGlassIcon,
   PlusIcon,
   PencilIcon,
@@ -9,6 +9,8 @@ import {
   CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
+import AdminModal from '../UI/AdminModal';
+import FormField, { Input, Select, Textarea } from '../UI/FormField';
 
 interface Service {
   id: string;
@@ -31,6 +33,21 @@ const ServiceManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Form state for adding new service
+  const [newService, setNewService] = useState({
+    name: '',
+    category: '',
+    description: '',
+    minPrice: '',
+    maxPrice: '',
+    duration: '',
+    status: 'active'
+  });
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const mockServices: Service[] = [
     {
@@ -102,12 +119,108 @@ const ServiceManagement = () => {
 
   const filteredServices = mockServices.filter(service => {
     const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         service.description.toLowerCase().includes(searchTerm.toLowerCase());
+      service.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === 'all' || service.category === filterCategory;
     const matchesStatus = filterStatus === 'all' || service.status === filterStatus;
-    
+
     return matchesSearch && matchesCategory && matchesStatus;
   });
+
+  // Form handlers
+  const handleInputChange = (field: string, value: string) => {
+    setNewService(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!newService.name.trim()) {
+      errors.name = 'Tên dịch vụ là bắt buộc';
+    }
+
+    if (!newService.category) {
+      errors.category = 'Danh mục là bắt buộc';
+    }
+
+    if (!newService.description.trim()) {
+      errors.description = 'Mô tả là bắt buộc';
+    }
+
+    if (!newService.minPrice.trim()) {
+      errors.minPrice = 'Giá tối thiểu là bắt buộc';
+    } else if (isNaN(Number(newService.minPrice)) || Number(newService.minPrice) < 0) {
+      errors.minPrice = 'Giá tối thiểu phải là số hợp lệ';
+    }
+
+    if (!newService.maxPrice.trim()) {
+      errors.maxPrice = 'Giá tối đa là bắt buộc';
+    } else if (isNaN(Number(newService.maxPrice)) || Number(newService.maxPrice) < 0) {
+      errors.maxPrice = 'Giá tối đa phải là số hợp lệ';
+    } else if (Number(newService.maxPrice) < Number(newService.minPrice)) {
+      errors.maxPrice = 'Giá tối đa phải lớn hơn giá tối thiểu';
+    }
+
+    if (!newService.duration.trim()) {
+      errors.duration = 'Thời gian là bắt buộc';
+    } else if (isNaN(Number(newService.duration)) || Number(newService.duration) <= 0) {
+      errors.duration = 'Thời gian phải là số dương';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Reset form and close modal
+      setNewService({
+        name: '',
+        category: '',
+        description: '',
+        minPrice: '',
+        maxPrice: '',
+        duration: '',
+        status: 'active'
+      });
+      setFormErrors({});
+      setShowAddModal(false);
+
+      // Show success message
+      alert('Thêm dịch vụ thành công!');
+    } catch (error) {
+      alert('Có lỗi xảy ra khi thêm dịch vụ!');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setNewService({
+      name: '',
+      category: '',
+      description: '',
+      minPrice: '',
+      maxPrice: '',
+      duration: '',
+      status: 'active'
+    });
+    setFormErrors({});
+  };
 
   return (
     <div className="space-y-6">
@@ -117,8 +230,8 @@ const ServiceManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900">Quản lý dịch vụ</h1>
           <p className="text-gray-600">Quản lý các dịch vụ y tế trên hệ thống</p>
         </div>
-        <Button>
-          <PlusIcon className="w-4 h-4 mr-2" />
+
+        <Button onClick={() => setShowAddModal(true)}>
           Thêm dịch vụ mới
         </Button>
       </div>
@@ -298,6 +411,112 @@ const ServiceManagement = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Service Modal */}
+      <AdminModal
+        isOpen={showAddModal}
+        onClose={handleCloseModal}
+        title="Thêm dịch vụ mới"
+        size="lg"
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField label="Tên dịch vụ" required error={formErrors.name}>
+              <Input
+                value={newService.name}
+                onChange={(value) => handleInputChange('name', value)}
+                placeholder="VD: Khám tổng quát"
+                required
+              />
+            </FormField>
+
+            <FormField label="Danh mục" required error={formErrors.category}>
+              <Select
+                value={newService.category}
+                onChange={(value) => handleInputChange('category', value)}
+                options={[
+                  { value: 'Khám tổng quát', label: 'Khám tổng quát' },
+                  { value: 'Chuyên khoa', label: 'Chuyên khoa' },
+                  { value: 'Xét nghiệm', label: 'Xét nghiệm' },
+                  { value: 'Chẩn đoán hình ảnh', label: 'Chẩn đoán hình ảnh' },
+                  { value: 'Phẫu thuật', label: 'Phẫu thuật' },
+                  { value: 'Vật lý trị liệu', label: 'Vật lý trị liệu' }
+                ]}
+                placeholder="Chọn danh mục"
+                required
+              />
+            </FormField>
+
+            <FormField label="Giá tối thiểu (VNĐ)" required error={formErrors.minPrice}>
+              <Input
+                type="number"
+                value={newService.minPrice}
+                onChange={(value) => handleInputChange('minPrice', value)}
+                placeholder="VD: 200000"
+                required
+              />
+            </FormField>
+
+            <FormField label="Giá tối đa (VNĐ)" required error={formErrors.maxPrice}>
+              <Input
+                type="number"
+                value={newService.maxPrice}
+                onChange={(value) => handleInputChange('maxPrice', value)}
+                placeholder="VD: 500000"
+                required
+              />
+            </FormField>
+
+            <FormField label="Thời gian (phút)" required error={formErrors.duration}>
+              <Input
+                type="number"
+                value={newService.duration}
+                onChange={(value) => handleInputChange('duration', value)}
+                placeholder="VD: 30"
+                required
+              />
+            </FormField>
+
+            <FormField label="Trạng thái">
+              <Select
+                value={newService.status}
+                onChange={(value) => handleInputChange('status', value)}
+                options={[
+                  { value: 'active', label: 'Hoạt động' },
+                  { value: 'inactive', label: 'Tạm dừng' }
+                ]}
+              />
+            </FormField>
+          </div>
+
+          <FormField label="Mô tả dịch vụ" required error={formErrors.description}>
+            <Textarea
+              value={newService.description}
+              onChange={(value) => handleInputChange('description', value)}
+              placeholder="Mô tả chi tiết về dịch vụ..."
+              rows={4}
+              required
+            />
+          </FormField>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button
+              type="button"
+              onClick={handleCloseModal}
+              className="bg-gray-500 hover:bg-gray-600"
+            >
+              Hủy
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-primary hover:bg-primary-dark"
+            >
+              {isLoading ? 'Đang thêm...' : 'Thêm dịch vụ'}
+            </Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 };

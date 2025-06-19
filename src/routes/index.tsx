@@ -17,6 +17,7 @@ const AppRoutes = () => {
       <Route path="/booking" element={<BookingFlow />} />
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin/*" element={<AdminDashboard />} />
     </Routes>
   );
 };

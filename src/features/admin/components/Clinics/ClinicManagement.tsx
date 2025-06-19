@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   MagnifyingGlassIcon,
   PlusIcon,
   PencilIcon,
@@ -12,6 +12,8 @@ import {
   ClockIcon
 } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
+import AdminModal from '../UI/AdminModal';
+import FormField, { Input, Select, Textarea } from '../UI/FormField';
 
 interface Clinic {
   id: string;
@@ -35,6 +37,25 @@ const ClinicManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterCity, setFilterCity] = useState('all');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Form state for adding new clinic
+  const [newClinic, setNewClinic] = useState({
+    name: '',
+    address: '',
+    district: '',
+    city: '',
+    phone: '',
+    email: '',
+    website: '',
+    description: '',
+    specialties: '',
+    operatingHours: '',
+    status: 'pending'
+  });
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const mockClinics: Clinic[] = [
     {
@@ -102,13 +123,109 @@ const ClinicManagement = () => {
 
   const filteredClinics = mockClinics.filter(clinic => {
     const matchesSearch = clinic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         clinic.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         clinic.phone.includes(searchTerm);
+      clinic.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      clinic.phone.includes(searchTerm);
     const matchesStatus = filterStatus === 'all' || clinic.status === filterStatus;
     const matchesCity = filterCity === 'all' || clinic.city === filterCity;
-    
+
     return matchesSearch && matchesStatus && matchesCity;
   });
+
+  // Form handlers
+  const handleInputChange = (field: string, value: string) => {
+    setNewClinic(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!newClinic.name.trim()) {
+      errors.name = 'Tên phòng khám là bắt buộc';
+    }
+
+    if (!newClinic.address.trim()) {
+      errors.address = 'Địa chỉ là bắt buộc';
+    }
+
+    if (!newClinic.phone.trim()) {
+      errors.phone = 'Số điện thoại là bắt buộc';
+    } else if (!/^(\+84|0)[0-9]{9,10}$/.test(newClinic.phone)) {
+      errors.phone = 'Số điện thoại không hợp lệ';
+    }
+
+    if (!newClinic.email.trim()) {
+      errors.email = 'Email là bắt buộc';
+    } else if (!/\S+@\S+\.\S+/.test(newClinic.email)) {
+      errors.email = 'Email không hợp lệ';
+    }
+
+    if (!newClinic.city) {
+      errors.city = 'Thành phố là bắt buộc';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Reset form and close modal
+      setNewClinic({
+        name: '',
+        address: '',
+        district: '',
+        city: '',
+        phone: '',
+        email: '',
+        website: '',
+        description: '',
+        specialties: '',
+        operatingHours: '',
+        status: 'pending'
+      });
+      setFormErrors({});
+      setShowAddModal(false);
+
+      // Show success message
+      alert('Thêm phòng khám thành công!');
+    } catch (error) {
+      alert('Có lỗi xảy ra khi thêm phòng khám!');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setNewClinic({
+      name: '',
+      address: '',
+      district: '',
+      city: '',
+      phone: '',
+      email: '',
+      website: '',
+      description: '',
+      specialties: '',
+      operatingHours: '',
+      status: 'pending'
+    });
+    setFormErrors({});
+  };
 
   return (
     <div className="space-y-6">
@@ -118,8 +235,7 @@ const ClinicManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900">Quản lý phòng khám</h1>
           <p className="text-gray-600">Quản lý các phòng khám đối tác trên hệ thống</p>
         </div>
-        <Button>
-          <PlusIcon className="w-4 h-4 mr-2" />
+        <Button onClick={() => setShowAddModal(true)}>
           Thêm phòng khám
         </Button>
       </div>
@@ -281,6 +397,131 @@ const ClinicManagement = () => {
           </div>
         ))}
       </div>
+
+      {/* Add Clinic Modal */}
+      <AdminModal
+        isOpen={showAddModal}
+        onClose={handleCloseModal}
+        title="Thêm phòng khám mới"
+        size="xl"
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField label="Tên phòng khám" required error={formErrors.name}>
+              <Input
+                value={newClinic.name}
+                onChange={(value) => handleInputChange('name', value)}
+                placeholder="Nhập tên phòng khám"
+                required
+              />
+            </FormField>
+
+            <FormField label="Email" required error={formErrors.email}>
+              <Input
+                type="email"
+                value={newClinic.email}
+                onChange={(value) => handleInputChange('email', value)}
+                placeholder="Nhập địa chỉ email"
+                required
+              />
+            </FormField>
+
+            <FormField label="Số điện thoại" required error={formErrors.phone}>
+              <Input
+                value={newClinic.phone}
+                onChange={(value) => handleInputChange('phone', value)}
+                placeholder="Nhập số điện thoại"
+                required
+              />
+            </FormField>
+
+            <FormField label="Website">
+              <Input
+                value={newClinic.website}
+                onChange={(value) => handleInputChange('website', value)}
+                placeholder="Nhập website (tùy chọn)"
+              />
+            </FormField>
+
+            <FormField label="Thành phố" required error={formErrors.city}>
+              <Select
+                value={newClinic.city}
+                onChange={(value) => handleInputChange('city', value)}
+                options={[
+                  { value: 'TP. Hồ Chí Minh', label: 'TP. Hồ Chí Minh' },
+                  { value: 'Hà Nội', label: 'Hà Nội' },
+                  { value: 'Đà Nẵng', label: 'Đà Nẵng' },
+                  { value: 'Cần Thơ', label: 'Cần Thơ' },
+                  { value: 'Hải Phòng', label: 'Hải Phòng' }
+                ]}
+                placeholder="Chọn thành phố"
+                required
+              />
+            </FormField>
+
+            <FormField label="Quận/Huyện">
+              <Input
+                value={newClinic.district}
+                onChange={(value) => handleInputChange('district', value)}
+                placeholder="Nhập quận/huyện"
+              />
+            </FormField>
+          </div>
+
+          <FormField label="Địa chỉ" required error={formErrors.address}>
+            <Input
+              value={newClinic.address}
+              onChange={(value) => handleInputChange('address', value)}
+              placeholder="Nhập địa chỉ chi tiết"
+              required
+            />
+          </FormField>
+
+          <FormField label="Mô tả">
+            <Textarea
+              value={newClinic.description}
+              onChange={(value) => handleInputChange('description', value)}
+              placeholder="Mô tả về phòng khám"
+              rows={3}
+            />
+          </FormField>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField label="Chuyên khoa">
+              <Input
+                value={newClinic.specialties}
+                onChange={(value) => handleInputChange('specialties', value)}
+                placeholder="VD: Tim mạch, Nha khoa, Da liễu"
+              />
+            </FormField>
+
+            <FormField label="Giờ hoạt động">
+              <Input
+                value={newClinic.operatingHours}
+                onChange={(value) => handleInputChange('operatingHours', value)}
+                placeholder="VD: 8:00 - 17:00"
+              />
+            </FormField>
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button
+              type="button"
+              onClick={handleCloseModal}
+              className="bg-gray-500 hover:bg-gray-600"
+            >
+              Hủy
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-primary hover:bg-primary-dark"
+            >
+              {isLoading ? 'Đang thêm...' : 'Thêm phòng khám'}
+            </Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 };

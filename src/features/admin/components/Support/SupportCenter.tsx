@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   LifebuoyIcon,
   DocumentTextIcon,
   ChatBubbleLeftRightIcon,
@@ -11,6 +11,8 @@ import {
   FunnelIcon
 } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
+import AdminModal from '../UI/AdminModal';
+import FormField, { Input, Select, Textarea } from '../UI/FormField';
 
 interface SupportTicket {
   id: string;
@@ -45,6 +47,22 @@ const SupportCenter = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterPriority, setFilterPriority] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Form state for adding new ticket
+  const [newTicket, setNewTicket] = useState({
+    title: '',
+    description: '',
+    category: '',
+    priority: 'medium',
+    requesterName: '',
+    requesterEmail: '',
+    requesterRole: 'patient',
+    assignee: ''
+  });
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const mockTickets: SupportTicket[] = [
     {
@@ -145,12 +163,100 @@ const SupportCenter = () => {
 
   const filteredTickets = mockTickets.filter(ticket => {
     const matchesSearch = ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         ticket.description.toLowerCase().includes(searchTerm.toLowerCase());
+      ticket.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || ticket.status === filterStatus;
     const matchesPriority = filterPriority === 'all' || ticket.priority === filterPriority;
-    
+
     return matchesSearch && matchesStatus && matchesPriority;
   });
+
+  // Form handlers
+  const handleInputChange = (field: string, value: string) => {
+    setNewTicket(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!newTicket.title.trim()) {
+      errors.title = 'Tiêu đề là bắt buộc';
+    }
+
+    if (!newTicket.description.trim()) {
+      errors.description = 'Mô tả là bắt buộc';
+    }
+
+    if (!newTicket.category) {
+      errors.category = 'Danh mục là bắt buộc';
+    }
+
+    if (!newTicket.requesterName.trim()) {
+      errors.requesterName = 'Tên người yêu cầu là bắt buộc';
+    }
+
+    if (!newTicket.requesterEmail.trim()) {
+      errors.requesterEmail = 'Email là bắt buộc';
+    } else if (!/\S+@\S+\.\S+/.test(newTicket.requesterEmail)) {
+      errors.requesterEmail = 'Email không hợp lệ';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Reset form and close modal
+      setNewTicket({
+        title: '',
+        description: '',
+        category: '',
+        priority: 'medium',
+        requesterName: '',
+        requesterEmail: '',
+        requesterRole: 'patient',
+        assignee: ''
+      });
+      setFormErrors({});
+      setShowAddModal(false);
+
+      // Show success message
+      alert('Tạo ticket thành công!');
+    } catch (error) {
+      alert('Có lỗi xảy ra khi tạo ticket!');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setNewTicket({
+      title: '',
+      description: '',
+      category: '',
+      priority: 'medium',
+      requesterName: '',
+      requesterEmail: '',
+      requesterRole: 'patient',
+      assignee: ''
+    });
+    setFormErrors({});
+  };
 
   return (
     <div className="space-y-6">
@@ -160,8 +266,8 @@ const SupportCenter = () => {
           <h1 className="text-3xl font-bold text-gray-900">Trung tâm hỗ trợ</h1>
           <p className="text-gray-600">Quản lý hỗ trợ khách hàng và tài liệu SOP</p>
         </div>
-        <Button>
-          <PlusIcon className="w-4 h-4 mr-2" />
+
+        <Button onClick={() => setShowAddModal(true)}>
           Tạo ticket mới
         </Button>
       </div>
@@ -173,39 +279,46 @@ const SupportCenter = () => {
             <div className="p-2 bg-blue-100 rounded-lg">
               <LifebuoyIcon className="w-6 h-6 text-blue-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Tickets mở</p>
               <p className="text-2xl font-bold text-gray-900">12</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
               <ClockIcon className="w-6 h-6 text-yellow-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Đang xử lý</p>
               <p className="text-2xl font-bold text-gray-900">8</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-green-100 rounded-lg">
               <CheckCircleIcon className="w-6 h-6 text-green-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Đã giải quyết</p>
               <p className="text-2xl font-bold text-gray-900">156</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
               <ChatBubbleLeftRightIcon className="w-6 h-6 text-purple-600" />
             </div>
+            
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Thời gian phản hồi TB</p>
               <p className="text-2xl font-bold text-gray-900">2.5h</p>
@@ -227,11 +340,10 @@ const SupportCenter = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-primary text-primary'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 <Icon className="w-4 h-4 mr-2" />
                 {tab.label}
@@ -340,9 +452,9 @@ const SupportCenter = () => {
                 </div>
                 <DocumentTextIcon className="w-6 h-6 text-gray-400" />
               </div>
-              
+
               <p className="text-gray-600 mb-4">{sop.description}</p>
-              
+
               <div className="space-y-2 text-sm text-gray-500">
                 <div className="flex justify-between">
                   <span>Phiên bản:</span>
@@ -357,7 +469,7 @@ const SupportCenter = () => {
                   <span>{sop.downloads}</span>
                 </div>
               </div>
-              
+
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <Button className="w-full">
                   <DocumentTextIcon className="w-4 h-4 mr-2" />
@@ -382,6 +494,121 @@ const SupportCenter = () => {
           </div>
         </div>
       )}
+
+      {/* Add Ticket Modal */}
+      <AdminModal
+        isOpen={showAddModal}
+        onClose={handleCloseModal}
+        title="Tạo support ticket mới"
+        size="lg"
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField label="Tiêu đề" required error={formErrors.title}>
+              <Input
+                value={newTicket.title}
+                onChange={(value) => handleInputChange('title', value)}
+                placeholder="VD: Không thể đăng nhập"
+                required
+              />
+            </FormField>
+
+            <FormField label="Danh mục" required error={formErrors.category}>
+              <Select
+                value={newTicket.category}
+                onChange={(value) => handleInputChange('category', value)}
+                options={[
+                  { value: 'technical', label: 'Kỹ thuật' },
+                  { value: 'billing', label: 'Thanh toán' },
+                  { value: 'general', label: 'Chung' },
+                  { value: 'urgent', label: 'Khẩn cấp' }
+                ]}
+                placeholder="Chọn danh mục"
+                required
+              />
+            </FormField>
+
+            <FormField label="Mức độ ưu tiên">
+              <Select
+                value={newTicket.priority}
+                onChange={(value) => handleInputChange('priority', value)}
+                options={[
+                  { value: 'low', label: 'Thấp' },
+                  { value: 'medium', label: 'Trung bình' },
+                  { value: 'high', label: 'Cao' },
+                  { value: 'critical', label: 'Khẩn cấp' }
+                ]}
+              />
+            </FormField>
+
+            <FormField label="Vai trò người yêu cầu">
+              <Select
+                value={newTicket.requesterRole}
+                onChange={(value) => handleInputChange('requesterRole', value)}
+                options={[
+                  { value: 'patient', label: 'Bệnh nhân' },
+                  { value: 'doctor', label: 'Bác sĩ' },
+                  { value: 'clinic', label: 'Phòng khám' }
+                ]}
+              />
+            </FormField>
+
+            <FormField label="Tên người yêu cầu" required error={formErrors.requesterName}>
+              <Input
+                value={newTicket.requesterName}
+                onChange={(value) => handleInputChange('requesterName', value)}
+                placeholder="Nhập tên người yêu cầu"
+                required
+              />
+            </FormField>
+
+            <FormField label="Email người yêu cầu" required error={formErrors.requesterEmail}>
+              <Input
+                type="email"
+                value={newTicket.requesterEmail}
+                onChange={(value) => handleInputChange('requesterEmail', value)}
+                placeholder="Nhập email"
+                required
+              />
+            </FormField>
+          </div>
+
+          <FormField label="Mô tả chi tiết" required error={formErrors.description}>
+            <Textarea
+              value={newTicket.description}
+              onChange={(value) => handleInputChange('description', value)}
+              placeholder="Mô tả chi tiết vấn đề..."
+              rows={4}
+              required
+            />
+          </FormField>
+
+          <FormField label="Phân công cho">
+            <Input
+              value={newTicket.assignee}
+              onChange={(value) => handleInputChange('assignee', value)}
+              placeholder="VD: Admin Team, Tech Support (tùy chọn)"
+            />
+          </FormField>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button
+              type="button"
+              onClick={handleCloseModal}
+              className="bg-gray-500 hover:bg-gray-600"
+            >
+              Hủy
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-primary hover:bg-primary-dark"
+            >
+              {isLoading ? 'Đang tạo...' : 'Tạo ticket'}
+            </Button>
+          </div>
+        </form>
+      </AdminModal>
     </div>
   );
 };
