@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   MagnifyingGlassIcon,
-  PlusIcon,
   PencilIcon,
   TrashIcon,
   EyeIcon,
@@ -243,39 +242,46 @@ const ServiceManagement = () => {
             <div className="p-2 bg-blue-100 rounded-lg">
               <TagIcon className="w-6 h-6 text-blue-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Tổng dịch vụ</p>
               <p className="text-2xl font-bold text-gray-900">3</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-green-100 rounded-lg">
               <TagIcon className="w-6 h-6 text-green-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Đang hoạt động</p>
               <p className="text-2xl font-bold text-gray-900">2</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
               <CurrencyDollarIcon className="w-6 h-6 text-purple-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Tổng lượt đặt</p>
               <p className="text-2xl font-bold text-gray-900">1,940</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
               <TagIcon className="w-6 h-6 text-yellow-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Đánh giá TB</p>
               <p className="text-2xl font-bold text-gray-900">4.8</p>
@@ -289,6 +295,7 @@ const ServiceManagement = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="relative">
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            
             <input
               type="text"
               placeholder="Tìm kiếm dịch vụ..."
@@ -297,6 +304,7 @@ const ServiceManagement = () => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
+
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
@@ -307,6 +315,7 @@ const ServiceManagement = () => {
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
+
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
@@ -327,10 +336,12 @@ const ServiceManagement = () => {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 mb-1">{service.name}</h3>
+                  
                   <span className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full mb-2">
                     {service.category}
                   </span>
                 </div>
+
                 <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(service.status)}`}>
                   {service.status === 'active' ? 'Hoạt động' : 'Tạm dừng'}
                 </span>
@@ -343,18 +354,22 @@ const ServiceManagement = () => {
                   <span className="text-sm text-gray-600">Giá:</span>
                   <span className="text-sm font-medium text-gray-900">{formatPrice(service.price)}</span>
                 </div>
+
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Thời gian:</span>
                   <span className="text-sm font-medium text-gray-900">{service.duration} phút</span>
                 </div>
+
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Nhà cung cấp:</span>
                   <span className="text-sm font-medium text-gray-900">{service.totalProviders}</span>
                 </div>
+
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Lượt đặt:</span>
                   <span className="text-sm font-medium text-gray-900">{service.totalBookings}</span>
                 </div>
+
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Đánh giá:</span>
                   <span className="text-sm font-medium text-gray-900">{service.rating}/5</span>
@@ -365,13 +380,16 @@ const ServiceManagement = () => {
                 <div className="text-sm text-gray-600">
                   Tạo: {new Date(service.createdAt).toLocaleDateString('vi-VN')}
                 </div>
+
                 <div className="flex space-x-2">
                   <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-md">
                     <EyeIcon className="w-4 h-4" />
                   </button>
+
                   <button className="p-2 text-green-600 hover:bg-green-50 rounded-md">
                     <PencilIcon className="w-4 h-4" />
                   </button>
+
                   <button className="p-2 text-red-600 hover:bg-red-50 rounded-md">
                     <TrashIcon className="w-4 h-4" />
                   </button>
@@ -387,6 +405,7 @@ const ServiceManagement = () => {
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Dịch vụ phổ biến</h2>
         </div>
+
         <div className="p-6">
           <div className="space-y-4">
             {mockServices
@@ -397,11 +416,13 @@ const ServiceManagement = () => {
                     <div className="w-8 h-8 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
                       <span className="text-sm font-medium text-primary">{index + 1}</span>
                     </div>
+
                     <div>
                       <p className="text-sm font-medium text-gray-900">{service.name}</p>
                       <p className="text-xs text-gray-500">{service.category}</p>
                     </div>
                   </div>
+
                   <div className="text-right">
                     <p className="text-sm font-medium text-gray-900">{service.totalBookings} lượt</p>
                     <p className="text-xs text-gray-500">{service.rating}/5 ⭐</p>
@@ -507,6 +528,7 @@ const ServiceManagement = () => {
             >
               Hủy
             </Button>
+            
             <Button
               type="submit"
               disabled={isLoading}

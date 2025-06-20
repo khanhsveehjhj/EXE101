@@ -9,7 +9,6 @@ import {
   ClockIcon, 
   StarIcon,
   BuildingOfficeIcon,
-  UserGroupIcon,
   CalendarIcon
 } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
@@ -67,16 +66,20 @@ const HospitalDetail = () => {
           alt={hospital.name}
           className="w-full h-full object-cover"
         />
+
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">{hospital.name}</h1>
+            
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <StarIcon className="w-5 h-5 text-yellow-400 fill-current" />
                 <span className="font-semibold">{hospital.rating}</span>
                 <span className="text-gray-300">({hospital.totalReviews} đánh giá)</span>
               </div>
+
               <div className="flex items-center gap-2">
                 <MapPinIcon className="w-5 h-5" />
                 <span>{hospital.district}, {hospital.city}</span>
@@ -124,6 +127,7 @@ const HospitalDetail = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-3">Chuyên khoa</h3>
+                      
                       <div className="space-y-2">
                         {hospital.specialties.map(specialty => (
                           <div key={specialty} className="flex items-center gap-2">
@@ -136,15 +140,19 @@ const HospitalDetail = () => {
                     
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-3">Giờ làm việc</h3>
+                      
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <ClockIcon className="w-5 h-5 text-gray-400" />
+                          
                           <span className="text-gray-700">
                             Thứ 2 - Thứ 6: {hospital.workingHours.weekdays}
                           </span>
                         </div>
+
                         <div className="flex items-center gap-2">
                           <ClockIcon className="w-5 h-5 text-gray-400" />
+                          
                           <span className="text-gray-700">
                             Thứ 7 - CN: {hospital.workingHours.weekends}
                           </span>
@@ -168,14 +176,17 @@ const HospitalDetail = () => {
                               alt={doctor.name}
                               className="w-16 h-16 rounded-full object-cover"
                             />
+
                             <div className="flex-1">
                               <h3 className="font-semibold text-gray-800">{doctor.name}</h3>
                               <p className="text-primary text-sm">{doctor.specialty}</p>
                               <p className="text-gray-600 text-sm">{doctor.experience} năm kinh nghiệm</p>
+                              
                               <div className="flex items-center gap-1 mt-1">
                                 <StarIcon className="w-4 h-4 text-yellow-400 fill-current" />
                                 <span className="text-sm">{doctor.rating}</span>
                               </div>
+                              
                               <p className="text-sm text-gray-600 mt-1">
                                 Phí khám: {doctor.consultationFee.toLocaleString('vi-VN')}đ
                               </p>

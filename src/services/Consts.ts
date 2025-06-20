@@ -22,7 +22,7 @@ import user3 from '@/assets/Images/users/user3.jpg';
 
 import logo from '@/assets/Images/logo.png';
 
-export const links = ['Trang chủ', 'Bệnh viện', 'Dịch vụ', 'Đặt lịch', 'Bác sĩ', 'Đánh giá', 'Admin'];
+export const links = ['Trang chủ', 'Bệnh viện', 'Dịch vụ', 'Đặt lịch', 'Bác sĩ', 'Đánh giá'];
 
 export const descNums = [
   {

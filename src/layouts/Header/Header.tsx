@@ -87,8 +87,10 @@ const Header = () => {
   return (
     <>
       <div
-        className={`${flexBetween} ${isTopOfPage ? '' : 'bg-ocean-light'
-          } transition fixed top-0 z-30 w-full p-2 md:px-8`}
+        className={`${flexBetween} ${isTopOfPage
+          ? 'header-glass'
+          : 'header-glass-scrolled'
+          } transition-all duration-300 fixed top-0 z-30 w-full p-2 md:px-8 shadow-lg`}
       >
         <img
           className="w-10 sm:w-16 cursor-pointer"

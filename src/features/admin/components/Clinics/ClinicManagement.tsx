@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   MagnifyingGlassIcon,
-  PlusIcon,
   PencilIcon,
   TrashIcon,
   EyeIcon,
@@ -235,6 +234,7 @@ const ClinicManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900">Quản lý phòng khám</h1>
           <p className="text-gray-600">Quản lý các phòng khám đối tác trên hệ thống</p>
         </div>
+
         <Button onClick={() => setShowAddModal(true)}>
           Thêm phòng khám
         </Button>
@@ -247,39 +247,46 @@ const ClinicManagement = () => {
             <div className="p-2 bg-blue-100 rounded-lg">
               <CheckCircleIcon className="w-6 h-6 text-blue-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Đang hoạt động</p>
               <p className="text-2xl font-bold text-gray-900">1</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-yellow-100 rounded-lg">
               <ClockIcon className="w-6 h-6 text-yellow-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Chờ duyệt</p>
               <p className="text-2xl font-bold text-gray-900">1</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-green-100 rounded-lg">
               <PhoneIcon className="w-6 h-6 text-green-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Tổng lịch hẹn</p>
               <p className="text-2xl font-bold text-gray-900">1,250</p>
             </div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="p-2 bg-purple-100 rounded-lg">
               <MapPinIcon className="w-6 h-6 text-purple-600" />
             </div>
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Tổng doanh thu</p>
               <p className="text-2xl font-bold text-gray-900">₫2.5M</p>
@@ -293,6 +300,7 @@ const ClinicManagement = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="relative">
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            
             <input
               type="text"
               placeholder="Tìm kiếm phòng khám..."
@@ -301,6 +309,7 @@ const ClinicManagement = () => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
+
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
@@ -311,6 +320,7 @@ const ClinicManagement = () => {
             <option value="pending">Chờ duyệt</option>
             <option value="suspended">Tạm khóa</option>
           </select>
+
           <select
             value={filterCity}
             onChange={(e) => setFilterCity(e.target.value)}
@@ -332,15 +342,18 @@ const ClinicManagement = () => {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{clinic.name}</h3>
+
                   <div className="flex items-center text-sm text-gray-600 mb-1">
                     <MapPinIcon className="w-4 h-4 mr-1" />
                     {clinic.address}, {clinic.district}, {clinic.city}
                   </div>
+
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <PhoneIcon className="w-4 h-4 mr-1" />
                     {clinic.phone}
                   </div>
                 </div>
+
                 <div className="flex items-center">
                   {getStatusIcon(clinic.status)}
                   <span className={`ml-2 px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(clinic.status)}`}>
@@ -355,6 +368,7 @@ const ClinicManagement = () => {
                     {specialty}
                   </span>
                 ))}
+
                 {clinic.specialties.length > 3 && (
                   <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                     +{clinic.specialties.length - 3}
@@ -367,10 +381,12 @@ const ClinicManagement = () => {
                   <p className="text-sm text-gray-600">Bác sĩ</p>
                   <p className="text-lg font-semibold text-gray-900">{clinic.totalDoctors}</p>
                 </div>
+
                 <div>
                   <p className="text-sm text-gray-600">Lịch hẹn</p>
                   <p className="text-lg font-semibold text-gray-900">{clinic.totalBookings}</p>
                 </div>
+
                 <div>
                   <p className="text-sm text-gray-600">Đánh giá</p>
                   <p className="text-lg font-semibold text-gray-900">{clinic.rating}/5</p>
@@ -381,13 +397,16 @@ const ClinicManagement = () => {
                 <div className="text-sm text-gray-600">
                   Đăng ký: {new Date(clinic.registeredAt).toLocaleDateString('vi-VN')}
                 </div>
+
                 <div className="flex space-x-2">
                   <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-md">
                     <EyeIcon className="w-4 h-4" />
                   </button>
+
                   <button className="p-2 text-green-600 hover:bg-green-50 rounded-md">
                     <PencilIcon className="w-4 h-4" />
                   </button>
+
                   <button className="p-2 text-red-600 hover:bg-red-50 rounded-md">
                     <TrashIcon className="w-4 h-4" />
                   </button>
@@ -512,6 +531,7 @@ const ClinicManagement = () => {
             >
               Hủy
             </Button>
+            
             <Button
               type="submit"
               disabled={isLoading}
