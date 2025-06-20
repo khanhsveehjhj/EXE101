@@ -12,17 +12,20 @@ const Footer = () => {
               {address}
             </p>
           ))}
+
           <p>{FooterData.phone}</p>
         </div>
         <div className="flex gap-10">
           <div>
             <p className="font-bold text-lg">Khoa phòng</p>
+
             <ul>
               {FooterData.departments.map((department, index) => (
                 <li key={index}>{department}</li>
               ))}
             </ul>
           </div>
+          
           <ul>
             {FooterData.links.map((link, index) => (
               <li key={index}>{link}</li>

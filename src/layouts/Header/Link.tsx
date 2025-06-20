@@ -12,7 +12,7 @@ type Props = {
 const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = useApp();
+  useApp();
 
   const pageMapping: { [key: string]: { page: SelectedPage; route?: string } } = {
     'Trang chủ': { page: SelectedPage.Home, route: '/' },
@@ -85,12 +85,6 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
           }
         }, 300);
       }
-      return;
-    }
-
-    // Admin page
-    if (page === 'Admin') {
-      navigate('/admin');
       return;
     }
 

@@ -345,6 +345,7 @@ const UserManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900">Quản lý người dùng</h1>
           <p className="text-gray-600">Quản lý tài khoản người dùng trên hệ thống</p>
         </div>
+
         <Button onClick={() => setShowAddModal(true)}>
           Thêm người dùng
         </Button>
@@ -407,26 +408,33 @@ const UserManagement = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Người dùng
                 </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Vai trò
                 </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Trạng thái
                 </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Đăng ký
                 </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Lần cuối đăng nhập
                 </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Lịch hẹn
                 </th>
+
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Thao tác
                 </th>
               </tr>
             </thead>
+
             <tbody className="bg-white divide-y divide-gray-200">
               {currentUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
@@ -437,31 +445,39 @@ const UserManagement = () => {
                       <div className="text-sm text-gray-500">{user.phone}</div>
                     </div>
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="text-sm text-gray-900">{getRoleLabel(user.role)}</span>
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(user.status)}`}>
                       {getStatusLabel(user.status)}
                     </span>
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {new Date(user.registeredAt).toLocaleDateString('vi-VN')}
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {new Date(user.lastLogin).toLocaleDateString('vi-VN')}
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {user.totalBookings}
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
                       <button className="text-blue-600 hover:text-blue-900">
                         <EyeIcon className="w-4 h-4" />
                       </button>
+
                       <button className="text-green-600 hover:text-green-900">
                         <PencilIcon className="w-4 h-4" />
                       </button>
+
                       <button className="text-red-600 hover:text-red-900">
                         <TrashIcon className="w-4 h-4" />
                       </button>
@@ -484,6 +500,7 @@ const UserManagement = () => {
               <ChevronLeftIcon className="w-4 h-4 mr-1" />
               Trước
             </button>
+
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
@@ -493,12 +510,14 @@ const UserManagement = () => {
               <ChevronRightIcon className="w-4 h-4 ml-1" />
             </button>
           </div>
+
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
               <p className="text-sm text-gray-700">
                 Hiển thị <span className="font-medium">{displayStart}</span> đến <span className="font-medium">{displayEnd}</span> trong tổng số <span className="font-medium">{totalUsers}</span> kết quả
               </p>
             </div>
+
             <div>
               <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                 <button
@@ -641,6 +660,7 @@ const UserManagement = () => {
             >
               Hủy
             </Button>
+            
             <Button
               type="submit"
               disabled={isLoading}
