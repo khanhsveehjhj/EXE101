@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { AuthState, User, Hospital, Booking, UserRole } from '@/types';
+import { AuthState, User, Hospital, Booking } from '@/types';
 import { mockHospitals, mockUser } from '@/services/MockData';
 
 // Action types

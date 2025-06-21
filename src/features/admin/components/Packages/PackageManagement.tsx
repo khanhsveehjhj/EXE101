@@ -53,7 +53,7 @@ interface ServicePackage {
 }
 
 const PackageManagement = () => {
-  const [activeTab, setActiveTab] = useState<'packages' | 'subscribers' | 'analytics'>('packages');
+  const [activeTab] = useState<'packages' | 'subscribers' | 'analytics'>('packages');
   const [showAddModal, setShowAddModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

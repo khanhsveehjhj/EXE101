@@ -1,7 +1,7 @@
 import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/20/solid';
 import { SelectedPage, User } from '@/types';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/store/AppContext';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
@@ -21,7 +21,6 @@ const NavBar = ({ flexBetween, selectedPage, setSelectedPage, onLoginClick, curr
   const isAboveMediumScreens = useMediaQuery('(min-width: 900px)');
   const navigate = useNavigate();
   const { logout } = useApp();
-  const location = useLocation();
 
   const handleLogout = () => {
     logout();

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PhoneIcon, CheckCircleIcon, ArrowLeftIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { PhoneIcon, CheckCircleIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
 import FormInput from '@/components/UI/FormInput';
 

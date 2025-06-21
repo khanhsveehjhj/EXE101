@@ -401,7 +401,7 @@ const Analytics = () => {
   };
 
   // Pie chart data for services
-  const serviceChartData = topServices.map((service, index) => ({
+  const serviceChartData = topServices.map((service) => ({
     name: service.name,
     value: service.percentage,
     bookings: service.bookings
@@ -512,12 +512,12 @@ const Analytics = () => {
                     dataKey="value"
                     label={({ name, value }) => `${name}: ${value}%`}
                   >
-                    {serviceChartData.map((entry, index) => (
+                    {serviceChartData.map((_, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value, name, props) => [
+                    formatter={(value, _, props) => [
                       `${value}% (${props.payload.bookings} lịch hẹn)`,
                       'Tỷ lệ'
                     ]}

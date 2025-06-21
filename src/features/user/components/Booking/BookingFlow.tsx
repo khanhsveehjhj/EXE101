@@ -27,7 +27,7 @@ const BookingFlow = () => {
   const navigate = useNavigate();
   const { state, createBooking } = useApp();
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(state.selectedHospital);
+  const [selectedHospital] = useState<Hospital | null>(state.selectedHospital);
   const [availableDoctors, setAvailableDoctors] = useState<Doctor[]>([]);
   const [bookingData, setBookingData] = useState<BookingData>({
     hospitalId: state.selectedHospital?.id || '',

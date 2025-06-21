@@ -1,12 +1,10 @@
 import {
-  HeartIcon,
   ShieldCheckIcon,
   ClockIcon,
   GlobeAltIcon
 } from '@heroicons/react/24/outline';
 
 const AdminFooter = () => {
-  const currentYear = new Date().getFullYear();
 
   const systemInfo = [
     { label: 'Phiên bản', value: 'v2.1.0' },

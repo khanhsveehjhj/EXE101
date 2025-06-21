@@ -358,7 +358,7 @@ const NotificationCenter = () => {
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'templates' | 'campaigns' | 'analytics')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -596,8 +596,8 @@ const NotificationCenter = () => {
                       ))}
                     </Pie>
                     <Tooltip
-                      formatter={(value: number, name: string, props: any) => [
-                        `${value}% (${props.payload.count.toLocaleString()} thông báo)`,
+                      formatter={(value, _, entry) => [
+                        `${value}% (${entry.payload.count.toLocaleString()} thông báo)`,
                         'Tỷ lệ'
                       ]}
                     />
