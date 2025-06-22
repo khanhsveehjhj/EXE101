@@ -7,8 +7,11 @@ import AppRoutes from './routes';
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isDoctorRoute = location.pathname.startsWith('/doctor');
+  const isReceptionistRoute = location.pathname.startsWith('/receptionist');
 
-  if (isAdminRoute) {
+  // For role-based dashboards, don't show the main header/footer
+  if (isAdminRoute || isDoctorRoute || isReceptionistRoute) {
     return (
       <div className="text-ocean-dark app min-w-[280px] min-h-screen bg-background">
         <AppRoutes />
