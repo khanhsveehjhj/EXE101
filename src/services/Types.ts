@@ -64,6 +64,7 @@ export interface Doctor {
   consultationFee: number;
   availableSlots: TimeSlot[];
   hospitalId: string;
+  receptionists?: Receptionist[];
 }
 
 export interface HospitalService {
@@ -148,6 +149,29 @@ export interface Medication {
   frequency: string;
   duration: string;
   instructions: string;
+}
+
+export interface Receptionist {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  dateOfBirth: string;
+  gender: 'male' | 'female' | 'other';
+  address: string;
+  workingHours: {
+    weekdays: string;
+    weekends: string;
+  };
+  status: 'active' | 'inactive';
+  doctorId: string;
+  hospitalId: string;
+  startDate: string;
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
 }
 
 export interface Patient {

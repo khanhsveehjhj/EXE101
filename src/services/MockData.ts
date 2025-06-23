@@ -161,7 +161,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.9,
     consultationFee: 500000,
     availableSlots: [],
-    hospitalId: 'hospital-1'
+    hospitalId: 'hospital-1',
+    receptionists: []
   },
   {
     id: 'doctor-2',
@@ -173,7 +174,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.8,
     consultationFee: 300000,
     availableSlots: [],
-    hospitalId: 'hospital-1'
+    hospitalId: 'hospital-1',
+    receptionists: []
   },
   {
     id: 'doctor-3',
@@ -185,7 +187,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.9,
     consultationFee: 800000,
     availableSlots: [],
-    hospitalId: 'hospital-2'
+    hospitalId: 'hospital-2',
+    receptionists: []
   },
   {
     id: 'doctor-4',
@@ -197,7 +200,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.8,
     consultationFee: 600000,
     availableSlots: [],
-    hospitalId: 'hospital-3'
+    hospitalId: 'hospital-3',
+    receptionists: []
   },
   {
     id: 'doctor-5',
@@ -209,7 +213,8 @@ export const mockDoctors: Doctor[] = [
     rating: 4.9,
     consultationFee: 400000,
     availableSlots: [],
-    hospitalId: 'hospital-4'
+    hospitalId: 'hospital-4',
+    receptionists: []
   }
 ];
 

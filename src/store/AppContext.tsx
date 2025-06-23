@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { AuthState, User, Hospital, Booking } from '@/types';
+import { AuthState, User, Hospital, Booking, UserRole } from '@/types';
 import { mockHospitals, mockUser } from '@/services/MockData';
 
 // Action types
@@ -165,10 +165,60 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     // Mock verification - accept any 6-digit code
     if (verificationCode.length === 6) {
-      const user: User = {
-        ...mockUser,
-        phone: phone,
-      };
+      let user: User;
+
+      // Hard coded phone numbers for different roles
+      if (phone === '+84987654321' || phone === '0987654321') {
+        // Doctor login
+        user = {
+          id: 'doctor-1',
+          phone: phone,
+          name: 'BS. Nguyễn Văn Minh',
+          email: 'doctor.minh@medihome.vn',
+          role: UserRole.Doctor,
+          hospitalId: 'hospital-1',
+          isVerified: true
+        };
+      } else if (phone === '+84976543210' || phone === '0976543210') {
+        // Receptionist login
+        user = {
+          id: 'receptionist-1',
+          phone: phone,
+          name: 'Nguyễn Thị Mai',
+          email: 'receptionist.mai@medihome.vn',
+          role: UserRole.Receptionist,
+          hospitalId: 'hospital-1',
+          isVerified: true
+        };
+      } else if (phone === '+84965432109' || phone === '0965432109') {
+        // Another doctor login
+        user = {
+          id: 'doctor-2',
+          phone: phone,
+          name: 'BS. Trần Thị Lan',
+          email: 'doctor.lan@medihome.vn',
+          role: UserRole.Doctor,
+          hospitalId: 'hospital-1',
+          isVerified: true
+        };
+      } else if (phone === '+84954321098' || phone === '0954321098') {
+        // Another receptionist login
+        user = {
+          id: 'receptionist-2',
+          phone: phone,
+          name: 'Trần Thị Lan',
+          email: 'receptionist.lan@medihome.vn',
+          role: UserRole.Receptionist,
+          hospitalId: 'hospital-1',
+          isVerified: true
+        };
+      } else {
+        // Default patient login for any other phone number
+        user = {
+          ...mockUser,
+          phone: phone,
+        };
+      }
 
       // Save to localStorage
       localStorage.setItem('currentUser', JSON.stringify(user));

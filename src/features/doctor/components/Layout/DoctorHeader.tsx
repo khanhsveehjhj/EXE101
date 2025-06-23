@@ -8,6 +8,7 @@ import {
     ArrowRightOnRectangleIcon,
     ChevronDownIcon
 } from '@heroicons/react/24/outline';
+import Logo from '@/assets/Images/favicon_transparent.png';
 
 const DoctorHeader = () => {
     const navigate = useNavigate();
@@ -53,8 +54,12 @@ const DoctorHeader = () => {
                     {/* Logo and Title */}
                     <div className="flex items-center space-x-4">
                         <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">M</span>
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                                <img
+                                    src={Logo}
+                                    alt="Logo"
+                                    className="w-8 h-8 object-contain"
+                                />
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold text-primary">MEDVIET</h1>

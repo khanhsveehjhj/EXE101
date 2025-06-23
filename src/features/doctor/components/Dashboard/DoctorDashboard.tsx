@@ -5,7 +5,8 @@ import {
     UserGroupIcon,
     DocumentTextIcon,
     ChartBarIcon,
-    HomeIcon
+    HomeIcon,
+    UsersIcon
 } from '@heroicons/react/24/outline';
 import DoctorLayout from '../Layout/DoctorLayout';
 import DashboardOverview from './DashboardOverview';
@@ -13,13 +14,15 @@ import AppointmentManagement from '../Appointments/AppointmentManagement';
 import PatientManagement from '../Patients/PatientManagement';
 import MedicalRecords from '../Records/MedicalRecords';
 import Analytics from '../Analytics/Analytics';
+import ReceptionistManagement from '../Staff/ReceptionistManagement';
 
 type DoctorSection =
     | 'overview'
     | 'appointments'
     | 'patients'
     | 'records'
-    | 'analytics';
+    | 'analytics'
+    | 'staff';
 
 const DoctorDashboard = () => {
     const location = useLocation();
@@ -35,6 +38,8 @@ const DoctorDashboard = () => {
             setActiveSection('patients');
         } else if (path === '/doctor/records') {
             setActiveSection('records');
+        } else if (path === '/doctor/staff') {
+            setActiveSection('staff');
         } else if (path === '/doctor/analytics') {
             setActiveSection('analytics');
         } else {
@@ -57,6 +62,7 @@ const DoctorDashboard = () => {
         { id: 'appointments', label: 'Lịch hẹn', icon: CalendarDaysIcon },
         { id: 'patients', label: 'Bệnh nhân', icon: UserGroupIcon },
         { id: 'records', label: 'Hồ sơ bệnh án', icon: DocumentTextIcon },
+        { id: 'staff', label: 'Quản lý lễ tân', icon: UsersIcon },
         { id: 'analytics', label: 'Thống kê', icon: ChartBarIcon },
     ];
 
@@ -70,6 +76,8 @@ const DoctorDashboard = () => {
                 return <PatientManagement />;
             case 'records':
                 return <MedicalRecords />;
+            case 'staff':
+                return <ReceptionistManagement doctorId="doctor-1" />;
             case 'analytics':
                 return <Analytics />;
             default:

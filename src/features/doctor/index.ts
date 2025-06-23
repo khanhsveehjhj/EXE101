@@ -12,3 +12,4 @@ export { default as AppointmentManagement } from './components/Appointments/Appo
 export { default as PatientManagement } from './components/Patients/PatientManagement';
 export { default as MedicalRecords } from './components/Records/MedicalRecords';
 export { default as DoctorAnalytics } from './components/Analytics/Analytics';
+export { default as ReceptionistManagement } from './components/Staff/ReceptionistManagement';

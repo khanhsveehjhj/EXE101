@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "@/store/AppContext";
 import Modal from "@/components/UI/Modal";
 import Button from "@/components/UI/Button";
@@ -12,6 +13,7 @@ type LoginModalProps = {
 
 const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const { login, state } = useApp();
+  const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
@@ -69,6 +71,20 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
         setPhoneNumber("");
         setVerificationCode("");
         setIsVerifying(false);
+
+        // Redirect based on phone number (since we know the role mapping)
+        if (phoneNumber === '+84987654321' || phoneNumber === '0987654321' ||
+          phoneNumber === '+84965432109' || phoneNumber === '0965432109') {
+          // Doctor login
+          navigate('/doctor');
+        } else if (phoneNumber === '+84976543210' || phoneNumber === '0976543210' ||
+          phoneNumber === '+84954321098' || phoneNumber === '0954321098') {
+          // Receptionist login
+          navigate('/receptionist');
+        } else {
+          // Patient login
+          navigate('/dashboard');
+        }
       } else {
         setError("Mã xác thực không đúng. Vui lòng thử lại.");
       }
@@ -127,9 +143,15 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
               <p className="text-xs text-gray-500 mb-2">
                 Chúng tôi sẽ gửi mã xác thực 6 chữ số đến số điện thoại của bạn
               </p>
-              <p className="text-xs text-blue-600">
-                Demo: Nhập bất kỳ số điện thoại nào và mã xác thực 123456
-              </p>
+              <div className="text-xs text-blue-600 space-y-1">
+                <p className="font-semibold">Demo - Số điện thoại test:</p>
+                <p>• 0987654321 - Bác sĩ (BS. Nguyễn Văn Minh)</p>
+                <p>• 0976543210 - Lễ tân (Nguyễn Thị Mai)</p>
+                <p>• 0965432109 - Bác sĩ (BS. Trần Thị Lan)</p>
+                <p>• 0954321098 - Lễ tân (Trần Thị Lan)</p>
+                <p>• Số khác - Bệnh nhân</p>
+                <p className="font-semibold mt-2">Mã xác thực: 123456</p>
+              </div>
             </div>
           </>
         ) : (

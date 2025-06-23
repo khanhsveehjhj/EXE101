@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import Logo from '@/assets/Images/favicon_transparent.png';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -72,24 +73,29 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
           {/* Tab Navigation */}
           <div className="bg-gradient-to-r from-primary via-ocean-light to-cyan-500 px-6 py-5">
+            <div className="flex justify-center mb-4">
+              <img
+                src={Logo}
+                alt="365 Medihome Logo"
+                className="w-12 h-12 object-contain"
+              />
+            </div>
             <div className="flex space-x-1 bg-white/15 backdrop-blur-sm rounded-xl p-1.5">
               <button
                 onClick={() => setMode('login')}
-                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  mode === 'login'
-                    ? 'bg-white text-primary shadow-md transform scale-[1.02]'
-                    : 'text-white/90 hover:bg-white/10 hover:text-white'
-                }`}
+                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${mode === 'login'
+                  ? 'bg-white text-primary shadow-md transform scale-[1.02]'
+                  : 'text-white/90 hover:bg-white/10 hover:text-white'
+                  }`}
               >
                 Đăng nhập
               </button>
               <button
                 onClick={() => setMode('register')}
-                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  mode === 'register'
-                    ? 'bg-white text-primary shadow-md transform scale-[1.02]'
-                    : 'text-white/90 hover:bg-white/10 hover:text-white'
-                }`}
+                className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${mode === 'register'
+                  ? 'bg-white text-primary shadow-md transform scale-[1.02]'
+                  : 'text-white/90 hover:bg-white/10 hover:text-white'
+                  }`}
               >
                 Đăng ký
               </button>
