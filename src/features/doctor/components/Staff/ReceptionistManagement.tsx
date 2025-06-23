@@ -4,7 +4,6 @@ import {
   PencilIcon,
   TrashIcon,
   EyeIcon,
-  PlusIcon,
   UserPlusIcon
 } from '@heroicons/react/24/outline';
 import Button from '@/components/UI/Button';
