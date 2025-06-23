@@ -53,7 +53,7 @@ interface ServicePackage {
 }
 
 const PackageManagement = () => {
-  const [activeTab] = useState<'packages' | 'subscribers' | 'analytics'>('packages');
+  const [activeTab, setActiveTab] = useState<'packages' | 'subscribers' | 'analytics'>('packages');
   const [showAddModal, setShowAddModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -111,6 +111,17 @@ const PackageManagement = () => {
     { name: 'Premium', value: 158, percentage: 7.6, color: '#ffc658' },
     { name: 'Enterprise', value: 28, percentage: 1.3, color: '#ff7300' }
   ];
+
+  // Dữ liệu subscribers chi tiết (mock data)
+  const subscribersDetails = [
+    { id: '1', name: 'Phòng khám ABC', email: 'abc@clinic.com', package: 'Premium', joinDate: '2024-01-15', status: 'active', revenue: 700000 },
+    { id: '2', name: 'Bệnh viện XYZ', email: 'xyz@hospital.com', package: 'Enterprise', joinDate: '2024-02-01', status: 'active', revenue: 1500000 },
+    { id: '3', name: 'Phòng khám DEF', email: 'def@clinic.com', package: 'Basic', joinDate: '2024-02-15', status: 'active', revenue: 500000 },
+    { id: '4', name: 'Phòng khám GHI', email: 'ghi@clinic.com', package: 'Premium', joinDate: '2024-03-01', status: 'inactive', revenue: 0 },
+    { id: '5', name: 'Phòng khám JKL', email: 'jkl@clinic.com', package: 'Basic', joinDate: '2024-03-10', status: 'active', revenue: 500000 },
+  ];
+
+
 
   const mockPackages: ServicePackage[] = [
     {
@@ -240,6 +251,15 @@ const PackageManagement = () => {
 
   const totalRevenue = mockPackages.reduce((sum, pkg) => sum + pkg.revenue, 0);
   const totalSubscribers = mockPackages.reduce((sum, pkg) => sum + pkg.subscribers, 0);
+
+  // Metrics cho subscribers
+  const subscriberMetrics = {
+    totalActive: subscribersDetails.filter(s => s.status === 'active').length,
+    totalInactive: subscribersDetails.filter(s => s.status === 'inactive').length,
+    newThisMonth: 12,
+    churnRate: 2.3,
+    avgRevenuePerUser: totalRevenue / totalSubscribers
+  };
 
   // Form handlers
   const handleInputChange = (field: string, value: string) => {
@@ -387,7 +407,7 @@ const PackageManagement = () => {
             <div className="p-2 bg-yellow-100 rounded-lg">
               <ChartBarIcon className="w-6 h-6 text-yellow-600" />
             </div>
-            
+
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">ARPU</p>
               <p className="text-2xl font-bold text-gray-900">₫{Math.round(totalRevenue / totalSubscribers).toLocaleString()}</p>
@@ -399,15 +419,15 @@ const PackageManagement = () => {
       {/* Tabs */}
       <div className="border-b border-gray-200">
         <nav className="flex space-x-8">
-          {[
-            { id: 'packages', label: 'Gói dịch vụ' },
-            { id: 'subscribers', label: 'Subscribers' },
-            { id: 'analytics', label: 'Phân tích' }
-          ].map(tab => (
+          {([
+            { id: 'packages' as const, label: 'Gói dịch vụ' },
+            { id: 'subscribers' as const, label: 'Subscribers' },
+            { id: 'analytics' as const, label: 'Phân tích' }
+          ] as const).map(tab => (
             <button
               key={tab.id}
-              // onClick={() => setActiveTab(tab.id as any)}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
+              onClick={() => setActiveTab(tab.id)}
+              className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === tab.id
                 ? 'border-primary text-primary'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
@@ -439,7 +459,7 @@ const PackageManagement = () => {
                 <div className="flex justify-between items-start mb-4 min-h-[60px]">
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{pkg.name}</h3>
-                    
+
                     <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${getTypeColor(pkg.type)}`}>
                       {pkg.type.toUpperCase()}
                     </span>
@@ -521,12 +541,63 @@ const PackageManagement = () => {
       {/* Subscribers Tab */}
       {activeTab === 'subscribers' && (
         <div className="space-y-6">
+          {/* Subscriber Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <UsersIcon className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Active Subscribers</p>
+                  <p className="text-2xl font-bold text-gray-900">{subscriberMetrics.totalActive}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <UsersIcon className="w-6 h-6 text-red-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Inactive Subscribers</p>
+                  <p className="text-2xl font-bold text-gray-900">{subscriberMetrics.totalInactive}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <UsersIcon className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">New This Month</p>
+                  <p className="text-2xl font-bold text-gray-900">{subscriberMetrics.newThisMonth}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <ChartBarIcon className="w-6 h-6 text-yellow-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Churn Rate</p>
+                  <p className="text-2xl font-bold text-gray-900">{subscriberMetrics.churnRate}%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Subscribers Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Current Distribution */}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Phân bố subscribers hiện tại</h2>
-              
+
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -554,7 +625,7 @@ const PackageManagement = () => {
             {/* Growth Trend */}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Xu hướng tăng trưởng 12 tháng</h2>
-              
+
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={subscribersData}>
@@ -617,12 +688,117 @@ const PackageManagement = () => {
               </div>
             </div>
           </div>
+
+          {/* Subscribers Details Table */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-6 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Chi tiết subscribers</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gói</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tham gia</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doanh thu</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {subscribersDetails.map((subscriber) => (
+                    <tr key={subscriber.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">{subscriber.name}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{subscriber.email}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${subscriber.package === 'Enterprise' ? 'bg-yellow-100 text-yellow-800' :
+                          subscriber.package === 'Premium' ? 'bg-purple-100 text-purple-800' :
+                            subscriber.package === 'Basic' ? 'bg-blue-100 text-blue-800' :
+                              'bg-gray-100 text-gray-800'
+                          }`}>
+                          {subscriber.package}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {new Date(subscriber.joinDate).toLocaleDateString('vi-VN')}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${subscriber.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                          }`}>
+                          {subscriber.status === 'active' ? 'Hoạt động' : 'Không hoạt động'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ₫{subscriber.revenue.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       )}
 
       {/* Analytics Tab */}
       {activeTab === 'analytics' && (
         <div className="space-y-6">
+          {/* Analytics Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <CurrencyDollarIcon className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                  <p className="text-2xl font-bold text-gray-900">₫{(totalRevenue / 1000000).toFixed(1)}M</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <ChartBarIcon className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Growth Rate</p>
+                  <p className="text-2xl font-bold text-gray-900">+12.5%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <UsersIcon className="w-6 h-6 text-purple-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
+                  <p className="text-2xl font-bold text-gray-900">8.3%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <CreditCardIcon className="w-6 h-6 text-yellow-600" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">LTV/CAC Ratio</p>
+                  <p className="text-2xl font-bold text-gray-900">3.2x</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Revenue Chart */}
             <div className="bg-white rounded-lg shadow p-6">
