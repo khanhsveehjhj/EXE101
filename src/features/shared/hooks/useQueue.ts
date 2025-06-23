@@ -108,7 +108,7 @@ const useQueue = (): UseQueueReturn => {
                 priority: 'urgent',
                 type: 'emergency',
                 estimatedDuration: 60,
-                queuePosition: 2,
+                queuePosition: 4,
                 estimatedCallTime: '10:45',
                 waitTime: 0 // Added the missing required property    
             }
