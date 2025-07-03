@@ -198,7 +198,7 @@ const UserDashboard = () => {
                     Chưa có lịch khám nào
                   </h3>
                   <p className="text-gray-500 mb-4">
-                    Đặt lịch khám với các bệnh viện chất lượng cao
+                    Đặt lịch khám với các phòng khám chất lượng cao
                   </p>
                   <Button onClick={() => navigate('/hospitals')}>
                     Đặt lịch ngay

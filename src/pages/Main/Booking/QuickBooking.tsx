@@ -31,7 +31,7 @@ const QuickBooking = () => {
         <h3 className="text-xl font-bold text-center mb-4">Đặt lịch khám chi tiết</h3>
         <p className="text-center text-gray-600 mb-4">
           Vui lòng gọi <span className="font-bold text-primary">+84 (028) 3822-1234</span> 
-          hoặc đến trực tiếp bệnh viện để hoàn tất đặt lịch.
+          hoặc đến trực tiếp phòng khám để hoàn tất đặt lịch.
         </p>
         <div className="text-center">
           <Button onClick={() => setShowFullForm(false)}>

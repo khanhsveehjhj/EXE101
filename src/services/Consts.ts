@@ -22,7 +22,7 @@ import user3 from '@/assets/Images/Users/user3.jpg';
 
 import logo from '@/assets/Images/Logo.png';
 
-export const links = ['Trang chủ', 'Bệnh viện', 'Dịch vụ', 'Đặt lịch', 'Bác sĩ', 'Đánh giá'];
+export const links = ['Trang chủ', 'Phòng khám', 'Dịch vụ', 'Đặt lịch', 'Bác sĩ', 'Đánh giá'];
 
 export const descNums = [
   {
@@ -224,7 +224,7 @@ export const DoctorsData = {
     },
   ],
   heading2: 'Chúng tôi là ai?',
-  desc: 'Website dịch vụ bệnh viện hợp tác là một nền tảng kỹ thuật số kết nối các chuyên gia y tế, bệnh nhân và quản trị viên để tối ưu hóa và nâng cao chất lượng cung cấp dịch vụ chăm sóc sức khỏe. Nền tảng sáng tạo này cho phép giao tiếp và phối hợp liền mạch giữa các đội ngũ y tế, giúp họ cung cấp dịch vụ chăm sóc hiệu quả và cá nhân hóa hơn cho bệnh nhân.',
+  desc: 'Website dịch vụ phòng khám hợp tác là một nền tảng kỹ thuật số kết nối các chuyên gia y tế, bệnh nhân và quản trị viên để tối ưu hóa và nâng cao chất lượng cung cấp dịch vụ chăm sóc sức khỏe. Nền tảng sáng tạo này cho phép giao tiếp và phối hợp liền mạch giữa các đội ngũ y tế, giúp họ cung cấp dịch vụ chăm sóc hiệu quả và cá nhân hóa hơn cho bệnh nhân.',
   img: Banner2,
 };
 
@@ -235,7 +235,7 @@ export const FeedbackData = {
       img: user1,
       name: 'Nguyễn Văn Hùng',
       job: 'Doanh nhân',
-      desc: 'Trải nghiệm của tôi với bệnh viện này thật tuyệt vời. Tôi rất khuyến khích dịch vụ của họ cho bất kỳ ai cần chăm sóc sức khỏe chất lượng. Họ thực sự ưu tiên chăm sóc bệnh nhân!',
+      desc: 'Trải nghiệm của tôi với phòng khám này thật tuyệt vời. Tôi rất khuyến khích dịch vụ của họ cho bất kỳ ai cần chăm sóc sức khỏe chất lượng. Họ thực sự ưu tiên chăm sóc bệnh nhân!',
     },
     {
       img: user2,

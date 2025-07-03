@@ -159,7 +159,7 @@ const BookingFlow = () => {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Bước {currentStep} / 4: {
-                  currentStep === 1 ? 'Chọn bệnh viện' :
+                  currentStep === 1 ? 'Chọn phòng khám' :
                     currentStep === 2 ? 'Chọn bác sĩ' :
                       currentStep === 3 ? 'Chọn thời gian' :
                         'Xác nhận thông tin'
@@ -173,7 +173,7 @@ const BookingFlow = () => {
           {/* Step 1: Select Hospital */}
           {currentStep === 1 && (
             <div>
-              <h2 className="text-2xl font-bold text-primary mb-6">Chọn bệnh viện</h2>
+              <h2 className="text-2xl font-bold text-primary mb-6">Chọn phòng khám</h2>
               {selectedHospital ? (
                 <div className="border border-primary rounded-lg p-4 mb-6">
                   <div className="flex items-start gap-4">
@@ -198,9 +198,9 @@ const BookingFlow = () => {
               ) : (
                 <div className="text-center py-8">
                   <BuildingOfficeIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">Vui lòng chọn bệnh viện trước khi đặt lịch</p>
+                  <p className="text-gray-600 mb-4">Vui lòng chọn phòng khám trước khi đặt lịch</p>
                   <Button onClick={() => navigate('/hospitals')}>
-                    Chọn bệnh viện
+                    Chọn phòng khám
                   </Button>
                 </div>
               )}
@@ -377,7 +377,7 @@ const BookingFlow = () => {
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Tóm tắt lịch khám</h3>
                 <div className="space-y-2 text-sm">
-                  <p><span className="font-medium">Bệnh viện:</span> {selectedHospital?.name}</p>
+                  <p><span className="font-medium">Phòng khám:</span> {selectedHospital?.name}</p>
                   <p><span className="font-medium">Bác sĩ:</span> {availableDoctors.find(d => d.id === bookingData.doctorId)?.name}</p>
                   <p><span className="font-medium">Chuyên khoa:</span> {availableDoctors.find(d => d.id === bookingData.doctorId)?.specialty}</p>
                   <p><span className="font-medium">Ngày khám:</span> {new Date(bookingData.date).toLocaleDateString('vi-VN')}</p>

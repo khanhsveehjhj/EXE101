@@ -16,7 +16,7 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
 
   const pageMapping: { [key: string]: { page: SelectedPage; route?: string } } = {
     'Trang chủ': { page: SelectedPage.Home, route: '/' },
-    'Bệnh viện': { page: SelectedPage.Hospitals, route: '/hospitals' },
+    'Phòng khám': { page: SelectedPage.Hospitals, route: '/hospitals' },
     'Dịch vụ': { page: SelectedPage.Services },
     'Đặt lịch': { page: SelectedPage.Booking },
     'Bác sĩ': { page: SelectedPage.Doctors },
@@ -66,8 +66,8 @@ const Link = ({ page, selectedPage, setSelectedPage, isTopOfPage }: Props) => {
       return;
     }
 
-    // Bệnh viện
-    if (page === 'Bệnh viện') {
+    // Phòng khám
+    if (page === 'Phòng khám') {
       setSelectedPage(SelectedPage.Hospitals);
       if (location.pathname === '/') {
         const el = document.getElementById('featured-hospitals');

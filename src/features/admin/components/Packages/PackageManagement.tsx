@@ -115,7 +115,7 @@ const PackageManagement = () => {
   // Dữ liệu subscribers chi tiết (mock data)
   const subscribersDetails = [
     { id: '1', name: 'Phòng khám ABC', email: 'abc@clinic.com', package: 'Premium', joinDate: '2024-01-15', status: 'active', revenue: 700000 },
-    { id: '2', name: 'Bệnh viện XYZ', email: 'xyz@hospital.com', package: 'Enterprise', joinDate: '2024-02-01', status: 'active', revenue: 1500000 },
+    { id: '2', name: 'Phòng khám XYZ', email: 'xyz@hospital.com', package: 'Enterprise', joinDate: '2024-02-01', status: 'active', revenue: 1500000 },
     { id: '3', name: 'Phòng khám DEF', email: 'def@clinic.com', package: 'Basic', joinDate: '2024-02-15', status: 'active', revenue: 500000 },
     { id: '4', name: 'Phòng khám GHI', email: 'ghi@clinic.com', package: 'Premium', joinDate: '2024-03-01', status: 'inactive', revenue: 0 },
     { id: '5', name: 'Phòng khám JKL', email: 'jkl@clinic.com', package: 'Basic', joinDate: '2024-03-10', status: 'active', revenue: 500000 },

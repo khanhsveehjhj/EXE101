@@ -60,11 +60,11 @@ const Main = () => {
       <SectionWrapper id="features">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-primary mb-4">
-            Nền tảng kết nối bệnh viện hàng đầu
+            Nền tảng kết nối phòng khám hàng đầu
           </h2>
 
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Kết nối bạn với mạng lưới bệnh viện tư nhân chất lượng cao trên toàn quốc.
+            Kết nối bạn với mạng lưới phòng khám tư nhân chất lượng cao trên toàn quốc.
             Đặt lịch khám dễ dàng, nhanh chóng và tiện lợi.
           </p>
         </div>
@@ -72,20 +72,20 @@ const Main = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="text-center p-6 bg-white rounded-lg shadow-lg">
             <BuildingOfficeIcon className="w-12 h-12 text-primary mx-auto mb-4" />
-            
+
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {state.hospitals.length}+ Bệnh viện
+              {state.hospitals.length}+ Phòng khám
             </h3>
-            
+
             <p className="text-gray-600">
-              Mạng lưới bệnh viện tư nhân chất lượng cao trên toàn quốc
+              Mạng lưới phòng khám tư nhân chất lượng cao trên toàn quốc
             </p>
           </div>
 
           <div className="text-center p-6 bg-white rounded-lg shadow-lg">
             <UserGroupIcon className="w-12 h-12 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-800 mb-2">500+ Bác sĩ</h3>
-            
+
             <p className="text-gray-600">
               Đội ngũ bác sĩ chuyên khoa giàu kinh nghiệm và tận tâm
             </p>
@@ -94,7 +94,7 @@ const Main = () => {
           <div className="text-center p-6 bg-white rounded-lg shadow-lg">
             <CalendarIcon className="w-12 h-12 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Đặt lịch 24/7</h3>
-            
+
             <p className="text-gray-600">
               Đặt lịch khám bệnh mọi lúc, mọi nơi với giao diện thân thiện
             </p>
@@ -103,7 +103,7 @@ const Main = () => {
 
         <div className="text-center">
           <Button onClick={handleFindHospitals} className="mr-4">
-            Tìm bệnh viện
+            Tìm phòng khám
           </Button>
 
           <button
@@ -118,10 +118,10 @@ const Main = () => {
       {/* Featured Hospitals */}
       <SectionWrapper id="featured-hospitals">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-primary mb-4">Bệnh viện nổi bật</h2>
-          
+          <h2 className="text-3xl font-bold text-primary mb-4">Phòng khám nổi bật</h2>
+
           <p className="text-lg text-gray-600">
-            Những bệnh viện được đánh giá cao nhất trong mạng lưới của chúng tôi
+            Những phòng khám được đánh giá cao nhất trong mạng lưới của chúng tôi
           </p>
         </div>
 
@@ -136,7 +136,7 @@ const Main = () => {
 
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">{hospital.name}</h3>
-                
+
                 <div className="flex items-center gap-2 mb-2">
                   <MapPinIcon className="w-4 h-4 text-gray-400" />
                   <span className="text-sm text-gray-600">{hospital.district}, {hospital.city}</span>
@@ -164,7 +164,7 @@ const Main = () => {
                     </span>
                   )}
                 </div>
-                
+
                 <button
                   onClick={() => navigate(`/hospital/${hospital.id}`)}
                   className="w-full px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors"
@@ -178,7 +178,7 @@ const Main = () => {
 
         <div className="text-center">
           <Button onClick={handleFindHospitals}>
-            Xem tất cả bệnh viện
+            Xem tất cả phòng khám
           </Button>
         </div>
       </SectionWrapper>

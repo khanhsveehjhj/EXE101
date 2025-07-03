@@ -76,7 +76,7 @@ const ClinicManagement = () => {
     },
     {
       id: '2',
-      name: 'Bệnh viện XYZ',
+      name: 'Phòng khám XYZ',
       address: '456 Lê Lợi, Quận 3',
       district: 'Quận 3',
       city: 'TP. Hồ Chí Minh',

@@ -15,7 +15,7 @@ const LoginPage = () => {
             />
           </div>
           <h1 className="text-4xl font-bold text-primary mb-2">365 Medihome</h1>
-          <p className="text-gray-600">Hệ thống quản lý bệnh viện</p>
+          <p className="text-gray-600">Hệ thống quản lý phòng khám</p>
         </div>
 
         {/* Login Form */}

@@ -21,7 +21,7 @@ const doctorImages = [
 export const mockHospitals: Hospital[] = [
   {
     id: 'hospital-1',
-    name: 'Bệnh viện Đa khoa Medihome',
+    name: 'Phòng khám Đa khoa Medihome',
     address: '123 Đường Nguyễn Huệ',
     district: 'Quận 1',
     city: 'TP. Hồ Chí Minh',
@@ -32,7 +32,7 @@ export const mockHospitals: Hospital[] = [
     rating: 4.8,
     totalReviews: 1250,
     specialties: ['Tim mạch', 'Thần kinh', 'Chấn thương chỉnh hình', 'Nha khoa'],
-    description: 'Bệnh viện đa khoa hàng đầu với đội ngũ bác sĩ chuyên môn cao và trang thiết bị hiện đại.',
+    description: 'Phòng khám đa khoa hàng đầu với đội ngũ bác sĩ chuyên môn cao và trang thiết bị hiện đại.',
     facilities: ['Phòng cấp cứu 24/7', 'Phòng phẫu thuật hiện đại', 'Máy MRI', 'Máy CT Scan', 'Phòng ICU'],
     workingHours: {
       weekdays: '7:00 - 20:00',
@@ -47,7 +47,7 @@ export const mockHospitals: Hospital[] = [
   },
   {
     id: 'hospital-2',
-    name: 'Bệnh viện Quốc tế City',
+    name: 'Phòng khám Quốc tế City',
     address: '456 Đường Lê Lợi',
     district: 'Quận 3',
     city: 'TP. Hồ Chí Minh',
@@ -58,7 +58,7 @@ export const mockHospitals: Hospital[] = [
     rating: 4.6,
     totalReviews: 980,
     specialties: ['Phẫu thuật', 'Tim mạch', 'Tiết niệu', 'Chẩn đoán hình ảnh'],
-    description: 'Bệnh viện quốc tế với tiêu chuẩn chăm sóc y tế cao cấp và dịch vụ đẳng cấp thế giới.',
+    description: 'Phòng khám quốc tế với tiêu chuẩn chăm sóc y tế cao cấp và dịch vụ đẳng cấp thế giới.',
     facilities: ['Phòng VIP', 'Trung tâm tim mạch', 'Phòng phẫu thuật robot', 'Khoa cấp cứu', 'Dịch vụ xe cứu thương'],
     workingHours: {
       weekdays: '6:00 - 22:00',
@@ -73,7 +73,7 @@ export const mockHospitals: Hospital[] = [
   },
   {
     id: 'hospital-3',
-    name: 'Bệnh viện Đại học Y Dược',
+    name: 'Phòng khám Đại học Y Dược',
     address: '789 Đường Điện Biên Phủ',
     district: 'Quận Bình Thạnh',
     city: 'TP. Hồ Chí Minh',
@@ -84,7 +84,7 @@ export const mockHospitals: Hospital[] = [
     rating: 4.7,
     totalReviews: 1580,
     specialties: ['Nội khoa', 'Nhi khoa', 'Sản phụ khoa', 'Thần kinh'],
-    description: 'Bệnh viện đào tạo với đội ngũ giảng viên và bác sĩ giàu kinh nghiệm, chuyên về các ca bệnh phức tạp.',
+    description: 'Phòng khám đào tạo với đội ngũ giảng viên và bác sĩ giàu kinh nghiệm, chuyên về các ca bệnh phức tạp.',
     facilities: ['Trung tâm nghiên cứu', 'Phòng thí nghiệm tiên tiến', 'Khoa cấp cứu', 'Phòng mổ vô khuẩn', 'Khoa hồi sức'],
     workingHours: {
       weekdays: '7:30 - 19:30',
@@ -99,7 +99,7 @@ export const mockHospitals: Hospital[] = [
   },
   {
     id: 'hospital-4',
-    name: 'Bệnh viện Chuyên khoa Nhi Đồng',
+    name: 'Phòng khám Chuyên khoa Nhi Đồng',
     address: '321 Đường Cách Mạng Tháng 8',
     district: 'Quận 10',
     city: 'TP. Hồ Chí Minh',
@@ -109,7 +109,7 @@ export const mockHospitals: Hospital[] = [
     rating: 4.9,
     totalReviews: 2100,
     specialties: ['Nhi khoa', 'Nhi tim mạch', 'Nhi thần kinh', 'Nhi tiêu hóa'],
-    description: 'Bệnh viện chuyên khoa nhi hàng đầu Việt Nam với đội ngũ bác sĩ nhi khoa giàu kinh nghiệm.',
+    description: 'Phòng khám chuyên khoa nhi hàng đầu Việt Nam với đội ngũ bác sĩ nhi khoa giàu kinh nghiệm.',
     facilities: ['Khoa cấp cứu nhi', 'Phòng mổ nhi', 'ICU nhi', 'Khu vui chơi trẻ em', 'Phòng khám gia đình'],
     workingHours: {
       weekdays: '7:00 - 21:00',
@@ -124,7 +124,7 @@ export const mockHospitals: Hospital[] = [
   },
   {
     id: 'hospital-5',
-    name: 'Bệnh viện Thẩm mỹ Venus',
+    name: 'Phòng khám Thẩm mỹ Venus',
     address: '654 Đường Nguyễn Trãi',
     district: 'Quận 5',
     city: 'TP. Hồ Chí Minh',

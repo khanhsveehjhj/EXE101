@@ -187,34 +187,34 @@ const Analytics = () => {
       case '7days':
         return [
           { name: 'Phòng khám ABC', bookings: 234, revenue: '₫2.1M', revenueValue: 2.1, growth: '+15%' },
-          { name: 'Bệnh viện XYZ', bookings: 189, revenue: '₫1.8M', revenueValue: 1.8, growth: '+12%' },
+          { name: 'Phòng khám XYZ', bookings: 189, revenue: '₫1.8M', revenueValue: 1.8, growth: '+12%' },
           { name: 'Phòng khám DEF', bookings: 156, revenue: '₫1.5M', revenueValue: 1.5, growth: '+8%' },
-          { name: 'Bệnh viện GHI', bookings: 134, revenue: '₫1.2M', revenueValue: 1.2, growth: '+5%' },
+          { name: 'Phòng khám GHI', bookings: 134, revenue: '₫1.2M', revenueValue: 1.2, growth: '+5%' },
           { name: 'Phòng khám JKL', bookings: 98, revenue: '₫890K', revenueValue: 0.89, growth: '+3%' }
         ];
       case '30days':
         return [
-          { name: 'Bệnh viện XYZ', bookings: 892, revenue: '₫8.2M', revenueValue: 8.2, growth: '+18%' },
+          { name: 'Phòng khám XYZ', bookings: 892, revenue: '₫8.2M', revenueValue: 8.2, growth: '+18%' },
           { name: 'Phòng khám ABC', bookings: 756, revenue: '₫7.1M', revenueValue: 7.1, growth: '+22%' },
           { name: 'Trung tâm Y tế MNO', bookings: 645, revenue: '₫6.8M', revenueValue: 6.8, growth: '+25%' },
           { name: 'Phòng khám DEF', bookings: 523, revenue: '₫5.2M', revenueValue: 5.2, growth: '+14%' },
-          { name: 'Bệnh viện GHI', bookings: 467, revenue: '₫4.9M', revenueValue: 4.9, growth: '+11%' }
+          { name: 'Phòng khám GHI', bookings: 467, revenue: '₫4.9M', revenueValue: 4.9, growth: '+11%' }
         ];
       case '3months':
         return [
-          { name: 'Bệnh viện XYZ', bookings: 2850, revenue: '₫28.5M', revenueValue: 28.5, growth: '+16%' },
+          { name: 'Phòng khám XYZ', bookings: 2850, revenue: '₫28.5M', revenueValue: 28.5, growth: '+16%' },
           { name: 'Trung tâm Y tế MNO', bookings: 2340, revenue: '₫26.2M', revenueValue: 26.2, growth: '+21%' },
           { name: 'Phòng khám ABC', bookings: 2180, revenue: '₫24.8M', revenueValue: 24.8, growth: '+19%' },
-          { name: 'Bệnh viện Đa khoa PQR', bookings: 1920, revenue: '₫22.1M', revenueValue: 22.1, growth: '+13%' },
+          { name: 'Phòng khám Đa khoa PQR', bookings: 1920, revenue: '₫22.1M', revenueValue: 22.1, growth: '+13%' },
           { name: 'Phòng khám DEF', bookings: 1650, revenue: '₫18.9M', revenueValue: 18.9, growth: '+9%' }
         ];
       case '1year':
         return [
-          { name: 'Bệnh viện XYZ', bookings: 12400, revenue: '₫142M', revenueValue: 142, growth: '+14%' },
+          { name: 'Phòng khám XYZ', bookings: 12400, revenue: '₫142M', revenueValue: 142, growth: '+14%' },
           { name: 'Trung tâm Y tế MNO', bookings: 11200, revenue: '₫128M', revenueValue: 128, growth: '+18%' },
-          { name: 'Bệnh viện Đa khoa PQR', bookings: 9800, revenue: '₫115M', revenueValue: 115, growth: '+12%' },
+          { name: 'Phòng khám Đa khoa PQR', bookings: 9800, revenue: '₫115M', revenueValue: 115, growth: '+12%' },
           { name: 'Phòng khám ABC', bookings: 8900, revenue: '₫98M', revenueValue: 98, growth: '+16%' },
-          { name: 'Bệnh viện Chuyên khoa STU', bookings: 7650, revenue: '₫89M', revenueValue: 89, growth: '+10%' }
+          { name: 'Phòng khám Chuyên khoa STU', bookings: 7650, revenue: '₫89M', revenueValue: 89, growth: '+10%' }
         ];
       default:
         return [];
