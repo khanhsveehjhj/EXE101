@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   CreditCardIcon,
   PencilIcon,
@@ -346,6 +346,10 @@ const PackageManagement = () => {
     });
     setFormErrors({});
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   return (
     <div className="space-y-6">

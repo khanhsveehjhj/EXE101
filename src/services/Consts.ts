@@ -254,8 +254,8 @@ export const FeedbackData = {
 
 export const FooterData = {
   logo: logo,
-  addresses: ['123 Đường Nguyễn Huệ, Quận 1', 'TP. Hồ Chí Minh, Việt Nam'],
-  phone: '+84 (028) 3822-1234',
+  addresses: ['Đại học FPT Quy Nhơn', 'Bình Định, Việt Nam'],
+  phone: '+84 39 832 5400',
   departments: [
     'Tim mạch',
     'Nha khoa',

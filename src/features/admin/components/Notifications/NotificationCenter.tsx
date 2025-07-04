@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   BellIcon,
   EnvelopeIcon,
@@ -278,6 +278,10 @@ const NotificationCenter = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   return (
     <div className="space-y-6">

@@ -244,7 +244,7 @@ const ComprehensiveReports = () => {
             {/* Tabs */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="border-b border-gray-200">
-                    <nav className="flex space-x-8 px-6">
+                    <nav className="flex gap-1 md:gap-8 px-2 md:px-6 flex-row">
                         {[
                             { id: 'overview', label: 'Tổng quan', icon: ChartBarIcon },
                             { id: 'revenue', label: 'Doanh thu', icon: CurrencyDollarIcon },
@@ -257,12 +257,13 @@ const ComprehensiveReports = () => {
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as any)}
-                                    className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
-                                        ? 'border-primary text-primary'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    className={`flex flex-col md:flex-row items-center md:items-end px-1.5 py-1 md:px-4 md:py-4 text-xs md:text-sm font-medium transition-all duration-150
+                                        ${activeTab === tab.id
+                                            ? 'text-primary border-b-2 border-primary bg-primary/5 md:bg-transparent'
+                                            : 'text-gray-500 hover:text-primary hover:bg-gray-100 md:hover:bg-transparent border-b-2 border-transparent'
                                         }`}
                                 >
-                                    <Icon className="w-5 h-5 mr-2" />
+                                    <Icon className="w-4 h-4 md:w-5 md:h-5 mb-0.5 md:mb-0 md:mr-2" />
                                     {tab.label}
                                 </button>
                             );
@@ -389,7 +390,7 @@ const ComprehensiveReports = () => {
                                                     outerRadius={80}
                                                     fill="#8884d8"
                                                     dataKey="value"
-                                                    label={({ name, value }) => `${name}: ${value}`}
+                                                    label={false}
                                                 >
                                                     {appointmentStatusData.map((entry, index) => (
                                                         <Cell key={`cell-${index}`} fill={entry.color} />

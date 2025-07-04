@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     MagnifyingGlassIcon,
     UserGroupIcon,
@@ -110,6 +110,10 @@ const PatientManagement = () => {
 
         return age;
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     return (
         <div className="space-y-6">

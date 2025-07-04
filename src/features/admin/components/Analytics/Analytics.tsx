@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ChartBarIcon,
   ArrowTrendingUpIcon,
@@ -26,6 +26,10 @@ import Button from '@/components/UI/Button';
 const Analytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('7days');
   const [selectedMetric, setSelectedMetric] = useState('bookings');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   // Get metrics based on selected period
   const getMetrics = () => {

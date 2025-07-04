@@ -18,6 +18,10 @@ const DashboardOverview = () => {
         return () => clearInterval(timer);
     }, []);
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     // Mock data for dashboard
     const todayStats = {
         totalAppointments: 23,

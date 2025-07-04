@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   UsersIcon,
@@ -180,6 +180,10 @@ const DashboardOverview = () => {
   const handleAddUser = () => setShowAddUserModal(true);
   const handleAddClinic = () => setShowAddClinicModal(true);
   const handleViewAnalytics = () => navigate('/admin/analytics');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   return (
     <div className="space-y-6">

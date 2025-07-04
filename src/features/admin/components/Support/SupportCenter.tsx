@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   LifebuoyIcon,
   DocumentTextIcon,
@@ -257,6 +257,10 @@ const SupportCenter = () => {
     setFormErrors({});
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -400,35 +404,30 @@ const SupportCenter = () => {
           {/* Tickets List */}
           <div className="space-y-4">
             {filteredTickets.map((ticket) => (
-              <div key={ticket.id} className="bg-white rounded-lg shadow p-6">
-                <div className="flex justify-between items-start mb-4">
+              <div key={ticket.id} className="bg-white rounded-2xl shadow-lg p-4 md:p-6 flex flex-col gap-2 md:gap-4">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 md:gap-0 mb-2">
                   <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900 mr-3">{ticket.title}</h3>
-                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getPriorityColor(ticket.priority)}`}>
-                        {ticket.priority.toUpperCase()}
-                      </span>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900 mr-2">{ticket.title}</h3>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className={`inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full ${getPriorityColor(ticket.priority)}`}>{ticket.priority.toUpperCase()}</span>
+                        <span className={`inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded-full ${getStatusColor(ticket.status)}`}>{getStatusIcon(ticket.status)}<span className="ml-1">{ticket.status.replace('_', ' ').toUpperCase()}</span></span>
+                      </div>
                     </div>
-                    <p className="text-gray-600 mb-3">{ticket.description}</p>
-                    <div className="flex items-center text-sm text-gray-500 space-x-4">
-                      <span>Người yêu cầu: {ticket.requester.name}</span>
-                      <span>Email: {ticket.requester.email}</span>
-                      <span>Vai trò: {ticket.requester.role}</span>
-                      {ticket.assignee && <span>Phụ trách: {ticket.assignee}</span>}
+                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{ticket.description}</p>
+                    <div className="flex flex-col sm:flex-row flex-wrap text-xs md:text-sm text-gray-500 gap-x-4 gap-y-1">
+                      <span><span className="font-medium">Người yêu cầu:</span> {ticket.requester.name}</span>
+                      <span><span className="font-medium">Email:</span> {ticket.requester.email}</span>
+                      <span><span className="font-medium">Vai trò:</span> {ticket.requester.role}</span>
+                      {ticket.assignee && <span><span className="font-medium">Phụ trách:</span> {ticket.assignee}</span>}
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {getStatusIcon(ticket.status)}
-                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(ticket.status)}`}>
-                      {ticket.status.replace('_', ' ').toUpperCase()}
-                    </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center text-sm text-gray-500">
-                  <span>Tạo: {new Date(ticket.createdAt).toLocaleString('vi-VN')}</span>
-                  <span>Cập nhật: {new Date(ticket.updatedAt).toLocaleString('vi-VN')}</span>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs md:text-sm text-gray-500 gap-y-1">
+                  <span><span className="font-medium">Tạo:</span> {new Date(ticket.createdAt).toLocaleString('vi-VN')}</span>
+                  <span><span className="font-medium">Cập nhật:</span> {new Date(ticket.updatedAt).toLocaleString('vi-VN')}</span>
                   {ticket.responseTime && (
-                    <span>Thời gian phản hồi: {ticket.responseTime}h</span>
+                    <span><span className="font-medium">Thời gian phản hồi:</span> {ticket.responseTime}h</span>
                   )}
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     UserIcon,
     MapPinIcon,
@@ -413,7 +413,9 @@ const PatientRegistration = () => {
         }, 3000);
     };
 
-
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     const steps = [
         { id: 1, title: 'Thông tin cá nhân', icon: UserIcon },
@@ -451,8 +453,8 @@ const PatientRegistration = () => {
             </div>
 
             {/* Progress Steps */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div className="flex items-center justify-between">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 md:p-6">
+                <div className="flex items-center justify-between gap-0.5 md:gap-4">
                     {steps.map((step, index) => {
                         const Icon = step.icon;
                         const isActive = currentStep === step.id;
@@ -460,18 +462,18 @@ const PatientRegistration = () => {
 
                         return (
                             <div key={step.id} className="flex items-center">
-                                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${isActive ? 'border-blue-500 bg-blue-500 text-white' :
+                                <div className={`flex items-center justify-center w-5 h-5 md:w-10 md:h-10 rounded-full border-2 transition-all duration-150 ${isActive ? 'border-blue-500 bg-blue-500 text-white' :
                                     isCompleted ? 'border-green-500 bg-green-500 text-white' :
                                         'border-gray-300 bg-white text-gray-400'
                                     }`}>
                                     {isCompleted ? (
-                                        <CheckCircleIcon className="w-6 h-6" />
+                                        <CheckCircleIcon className="w-3.5 h-3.5 md:w-6 md:h-6" />
                                     ) : (
-                                        <Icon className="w-5 h-5" />
+                                        <Icon className="w-3.5 h-3.5 md:w-5 md:h-5" />
                                     )}
                                 </div>
-                                <div className="ml-3">
-                                    <p className={`text-sm font-medium ${isActive ? 'text-blue-600' :
+                                <div className="ml-1 md:ml-3">
+                                    <p className={`text-[10px] md:text-sm font-medium ${isActive ? 'text-blue-600' :
                                         isCompleted ? 'text-green-600' :
                                             'text-gray-500'
                                         }`}>
@@ -479,8 +481,7 @@ const PatientRegistration = () => {
                                     </p>
                                 </div>
                                 {index < steps.length - 1 && (
-                                    <div className={`w-16 h-0.5 mx-4 ${isCompleted ? 'bg-green-500' : 'bg-gray-300'
-                                        }`} />
+                                    <div className={`w-4 h-0.5 md:w-16 mx-1 md:mx-4 ${isCompleted ? 'bg-green-500' : 'bg-gray-300'}`} />
                                 )}
                             </div>
                         );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   MagnifyingGlassIcon,
   PencilIcon,
@@ -225,6 +225,10 @@ const ClinicManagement = () => {
     });
     setFormErrors({});
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   return (
     <div className="space-y-6">

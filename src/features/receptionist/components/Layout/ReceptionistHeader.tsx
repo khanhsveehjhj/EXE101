@@ -111,38 +111,37 @@ const ReceptionistHeader = () => {
 
                             {/* Notifications Dropdown */}
                             {isNotificationDropdownOpen && (
-                                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                                    <div className="p-4 border-b border-gray-200">
-                                        <h3 className="font-semibold text-gray-900">Thông báo</h3>
+                                <div className="absolute right-0 mt-2 w-64 md:w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                                    <div className="p-2 md:p-4 border-b border-gray-200">
+                                        <h3 className="font-semibold text-xs md:text-sm text-gray-900">Thông báo</h3>
                                     </div>
-                                    <div className="max-h-96 overflow-y-auto">
+                                    <div className="max-h-80 md:max-h-96 overflow-y-auto">
                                         {mockNotifications.map((notification) => (
                                             <div
                                                 key={notification.id}
-                                                className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${!notification.isRead ? 'bg-blue-50' : ''
-                                                    }`}
+                                                className={`p-2 md:p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${!notification.isRead ? 'bg-blue-50' : ''}`}
                                             >
                                                 <div className="flex justify-between items-start">
                                                     <div className="flex-1">
-                                                        <h4 className="font-medium text-gray-900 text-sm">
+                                                        <h4 className="font-medium text-xs md:text-sm text-gray-900">
                                                             {notification.title}
                                                         </h4>
-                                                        <p className="text-gray-600 text-sm mt-1">
+                                                        <p className="text-gray-600 text-xs md:text-sm mt-1">
                                                             {notification.message}
                                                         </p>
-                                                        <p className="text-gray-400 text-xs mt-2">
+                                                        <p className="text-gray-400 text-[10px] md:text-xs mt-2">
                                                             {notification.time}
                                                         </p>
                                                     </div>
                                                     {!notification.isRead && (
-                                                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                                        <div className="w-2 h-2 md:w-3 md:h-3 bg-blue-500 rounded-full mt-2"></div>
                                                     )}
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="p-4 border-t border-gray-200">
-                                        <button className="text-primary text-sm font-medium hover:underline">
+                                    <div className="p-2 md:p-4 border-t border-gray-200">
+                                        <button className="text-primary text-xs md:text-sm font-medium hover:underline">
                                             Xem tất cả thông báo
                                         </button>
                                     </div>

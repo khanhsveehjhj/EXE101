@@ -253,10 +253,10 @@ const HospitalDetail = () => {
 
               <Button
                 onClick={handleBookAppointment}
-                className="w-full mb-4"
+                className="w-full mb-4 flex items-center justify-center gap-2 text-lg font-semibold"
               >
-                <CalendarIcon className="w-5 h-5 mr-2" />
-                Đặt lịch khám
+                <CalendarIcon className="w-5 h-5" />
+                <span>Đặt lịch khám</span>
               </Button>
 
               <button

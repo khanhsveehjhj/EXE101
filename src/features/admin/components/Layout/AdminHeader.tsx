@@ -41,59 +41,55 @@ const AdminHeader = () => {
 
   return (
     <header className={`${isScrolled ? 'admin-header-glass-scrolled' : 'admin-header-glass-transparent'} fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'border-b border-white/20 shadow-lg' : ''}`}>
-      <div className="flex items-center justify-between px-6 py-4">
+      <div className="flex items-center justify-between px-3 py-2 md:px-6 md:py-4 min-h-[48px] md:min-h-[unset]">
         {/* Left Section - Logo & Title */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <img
             src={Logo}
             alt="MEDVIET Admin"
-            className="w-10 h-10 cursor-pointer"
+            className="w-8 h-8 md:w-10 md:h-10 cursor-pointer"
             onClick={() => navigate('/admin')}
           />
-
           <div>
-            <h1 className={`text-xl font-bold ${isScrolled ? 'text-white' : 'text-primary'}`}>MEDVIET Admin</h1>
-            <p className={`text-sm ${isScrolled ? 'text-white/80' : 'text-primary/80'}`}>Hệ thống quản trị</p>
+            <h1 className={`text-base md:text-xl font-bold ${isScrolled ? 'text-white' : 'text-primary'}`}>MEDVIET Admin</h1>
+            <p className={`text-xs md:text-sm ${isScrolled ? 'text-white/80' : 'text-primary/80'}`}>Hệ thống quản trị</p>
           </div>
         </div>
-
         {/* Center Section - Search */}
-        <div className="flex-1 max-w-md mx-8">
+        <div className="flex-1 max-w-[120px] md:max-w-md mx-2 md:mx-8">
           <div className="relative">
-            <MagnifyingGlassIcon className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${isScrolled ? 'text-white/60' : 'text-primary/60'}`} />
+            <MagnifyingGlassIcon className={`absolute left-2 md:left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 ${isScrolled ? 'text-white/60' : 'text-primary/60'}`} />
             <input
               type="text"
               placeholder="Tìm kiếm..."
-              className={`w-full pl-10 pr-4 py-2 ${isScrolled
+              className={`w-full pl-8 md:pl-10 pr-2 md:pr-4 py-1.5 md:py-2 text-xs md:text-base ${isScrolled
                 ? 'bg-white/10 border-white/20 text-white placeholder-white/60 focus:ring-white/30 focus:border-white/40 hover:bg-white/15'
                 : 'bg-primary/10 border-primary/20 text-primary placeholder-primary/60 focus:ring-primary/30 focus:border-primary/40 hover:bg-primary/15'
                 } border rounded-lg focus:outline-none focus:ring-2 backdrop-blur-sm transition-all duration-200`}
             />
           </div>
         </div>
-
         {/* Right Section - Actions & User */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           {/* Notifications */}
           <div className="relative">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className={`relative p-2 ${isScrolled
+              className={`relative p-1.5 md:p-2 ${isScrolled
                 ? 'text-white/80 hover:text-white hover:bg-white/10'
                 : 'text-primary/80 hover:text-primary hover:bg-primary/10'
                 } rounded-lg transition-colors`}
             >
-              <BellIcon className="w-6 h-6" />
+              <BellIcon className="w-5 h-5 md:w-6 md:h-6" />
               {notifications.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                   {notifications.length}
                 </span>
               )}
             </button>
-
             {/* Notifications Dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+              <div className="absolute right-0 mt-2 w-72 md:w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
                 <div className="p-4 border-b border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900">Thông báo</h3>
                 </div>
@@ -123,39 +119,32 @@ const AdminHeader = () => {
               </div>
             )}
           </div>
-
           {/* Settings */}
-          <button className={`p-2 ${isScrolled
+          <button className={`p-1.5 md:p-2 ${isScrolled
             ? 'text-white/80 hover:text-white hover:bg-white/10'
             : 'text-primary/80 hover:text-primary hover:bg-primary/10'
             } rounded-lg transition-colors`}>
-            <Cog6ToothIcon className="w-6 h-6" />
+            <Cog6ToothIcon className="w-5 h-5 md:w-6 md:h-6" />
           </button>
-
           {/* User Menu */}
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className={`flex items-center space-x-3 p-2 ${isScrolled
+              className={`flex items-center space-x-2 md:space-x-3 p-1.5 md:p-2 ${isScrolled
                 ? 'text-white/80 hover:text-white hover:bg-white/10'
                 : 'text-primary/80 hover:text-primary hover:bg-primary/10'
                 } rounded-lg transition-colors`}
             >
-              <UserCircleIcon className="w-8 h-8" />
+              <UserCircleIcon className="w-6 h-6 md:w-8 md:h-8" />
               <div className="text-left hidden md:block">
-                <p className={`text-sm font-medium ${isScrolled ? 'text-white' : 'text-primary'}`}>
-                  {state.auth.user?.name || 'Admin User'}
-                </p>
-
-                <p className={`text-xs ${isScrolled ? 'text-white/60' : 'text-primary/60'}`}>Quản trị viên</p>
+                <p className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-white' : 'text-primary'}`}>{state.auth.user?.name || 'Admin User'}</p>
+                <p className={`text-[10px] md:text-xs ${isScrolled ? 'text-white/60' : 'text-primary/60'}`}>Quản trị viên</p>
               </div>
-
-              <ChevronDownIcon className="w-4 h-4" />
+              <ChevronDownIcon className="w-3 h-3 md:w-4 md:h-4" />
             </button>
-
             {/* User Dropdown */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+              <div className="absolute right-0 mt-2 w-40 md:w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
                 <div className="p-4 border-b border-gray-200">
                   <p className="text-sm font-medium text-gray-900">
                     {state.auth.user?.name || 'Admin User'}

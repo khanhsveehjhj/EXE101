@@ -63,14 +63,16 @@ const BookingFlow = () => {
     setAvailableDoctors(doctors);
   }, [state.auth.isAuthenticated, selectedHospital, navigate]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const handleInputChange = (field: keyof BookingData, value: string) => {
     setBookingData(prev => ({
       ...prev,
       [field]: value,
     }));
   };
-
-
 
   const handleNextStep = () => {
     if (currentStep < 4) {

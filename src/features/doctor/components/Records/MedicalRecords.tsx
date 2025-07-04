@@ -303,44 +303,44 @@ const MedicalRecords = () => {
                 {activeTab === 'records' && (
                     <div className="p-6">
                         {/* Search and Filter Controls */}
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 mb-6">
+                            <div className="flex flex-col sm:flex-row gap-1 flex-1">
                                 {/* Search */}
-                                <div className="relative">
-                                    <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                <div className="relative w-full sm:w-32">
+                                    <MagnifyingGlassIcon className="w-3.5 h-3.5 absolute left-1.5 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                     <input
                                         type="text"
-                                        placeholder="Tìm kiếm bệnh nhân, chẩn đoán..."
+                                        placeholder="Tìm..."
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full sm:w-80"
+                                        className="pl-7 pr-1 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent w-full bg-white text-xs"
                                     />
                                 </div>
 
                                 {/* Filter */}
-                                <div className="relative">
-                                    <FunnelIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                <div className="relative w-full sm:w-24">
+                                    <FunnelIcon className="w-3.5 h-3.5 absolute left-1.5 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                     <select
                                         value={filterStatus}
                                         onChange={(e) => setFilterStatus(e.target.value as 'all' | 'active' | 'completed' | 'cancelled')}
-                                        className="pl-10 pr-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none bg-white"
+                                        className="pl-7 pr-4 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent appearance-none bg-white w-full text-xs font-semibold text-primary"
                                     >
-                                        <option value="all">Tất cả trạng thái</option>
-                                        <option value="active">Đang điều trị</option>
+                                        <option value="all">Tất cả</option>
+                                        <option value="active">Đang trị</option>
                                         <option value="completed">Hoàn thành</option>
                                         <option value="cancelled">Đã hủy</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div className="flex gap-2">
-                                <button className="flex items-center px-3 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
-                                    <PrinterIcon className="w-4 h-4 mr-2" />
-                                    In báo cáo
+                            <div className="flex flex-col sm:flex-row gap-1 w-full sm:w-auto sm:ml-0.5">
+                                <button className="flex items-center justify-center px-1.5 py-1 text-gray-600 border border-gray-300 rounded hover:bg-gray-50 w-full sm:w-auto text-xs font-medium whitespace-nowrap">
+                                    <PrinterIcon className="w-3.5 h-3.5 mr-0.5" />
+                                    In
                                 </button>
-                                <button className="flex items-center px-3 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50">
-                                    <DocumentArrowDownIcon className="w-4 h-4 mr-2" />
-                                    Xuất Excel
+                                <button className="flex items-center justify-center px-1.5 py-1 text-gray-600 border border-gray-300 rounded hover:bg-gray-50 w-full sm:w-auto text-xs font-medium whitespace-nowrap">
+                                    <DocumentArrowDownIcon className="w-3.5 h-3.5 mr-0.5" />
+                                    Excel
                                 </button>
                             </div>
                         </div>

@@ -6,7 +6,9 @@ import {
     DocumentTextIcon,
     ChartBarIcon,
     HomeIcon,
-    UsersIcon
+    UsersIcon,
+    Bars3Icon,
+    XMarkIcon
 } from '@heroicons/react/24/outline';
 import DoctorLayout from '../Layout/DoctorLayout';
 import DashboardOverview from './DashboardOverview';
@@ -28,6 +30,7 @@ const DoctorDashboard = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState<DoctorSection>('overview');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // Handle URL-based navigation
     useEffect(() => {
@@ -88,36 +91,70 @@ const DoctorDashboard = () => {
     return (
         <DoctorLayout>
             <div className="flex min-h-full">
-                {/* Sidebar */}
-                <div className="w-64 bg-white shadow-lg">
-                    <div className="p-6 border-b border-gray-200">
-                        <h1 className="text-xl font-bold text-primary">Bác sĩ</h1>
-                        <p className="text-sm text-gray-600">MEDVIET Platform</p>
+                {/* Sidebar for desktop */}
+                <div className="hidden md:block w-64 bg-white shadow-lg">
+                    <div className="p-4 border-b border-gray-200">
+                        <h1 className="text-base font-bold text-primary">Bác sĩ</h1>
+                        <p className="text-xs text-gray-600">MEDVIET Platform</p>
                     </div>
-
-                    <nav className="mt-6">
+                    <nav className="mt-3">
                         {menuItems.map((item) => {
                             const Icon = item.icon;
                             return (
                                 <button
                                     key={item.id}
                                     onClick={() => handleSectionChange(item.id as DoctorSection)}
-                                    className={`w-full flex items-center px-6 py-3 text-left transition-colors ${activeSection === item.id
-                                        ? 'bg-primary text-white border-r-4 border-primary'
+                                    className={`w-full flex items-center px-3 py-2 text-left transition-colors text-sm gap-2 ${activeSection === item.id
+                                        ? 'bg-primary text-white border-r-2 border-primary'
                                         : 'text-gray-700 hover:bg-gray-100'
                                         }`}
                                 >
-                                    <Icon className="w-5 h-5 mr-3" />
+                                    <Icon className="w-4 h-4 mr-1" />
                                     {item.label}
                                 </button>
                             );
                         })}
                     </nav>
                 </div>
-
+                {/* Hamburger for mobile */}
+                <button className="md:hidden fixed top-16 left-3 z-50 bg-white rounded-full p-1.5 shadow-lg border border-gray-200" onClick={() => setSidebarOpen(true)}>
+                    <Bars3Icon className="w-6 h-6 text-primary" />
+                </button>
+                {/* Sidebar overlay for mobile */}
+                {sidebarOpen && (
+                    <div className="fixed inset-0 z-50 flex">
+                        <div className="w-48 bg-white shadow-lg h-full flex flex-col">
+                            <div className="flex items-center justify-between p-3 border-b border-gray-200">
+                                <span className="text-base font-bold text-primary">Bác sĩ</span>
+                                <button onClick={() => setSidebarOpen(false)}>
+                                    <XMarkIcon className="w-6 h-6 text-gray-500" />
+                                </button>
+                            </div>
+                            <nav className="mt-2 flex-1 flex flex-col gap-1">
+                                {menuItems.map((item) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => { handleSectionChange(item.id as DoctorSection); setSidebarOpen(false); }}
+                                            className={`w-full flex items-center px-3 py-2 text-sm text-left transition-colors rounded mb-1 gap-2 ${activeSection === item.id
+                                                ? 'bg-primary text-white'
+                                                : 'text-gray-700 hover:bg-gray-100'
+                                                }`}
+                                        >
+                                            <Icon className="w-4 h-4 mr-1" />
+                                            {item.label}
+                                        </button>
+                                    );
+                                })}
+                            </nav>
+                        </div>
+                        <div className="flex-1 bg-black/30" onClick={() => setSidebarOpen(false)} />
+                    </div>
+                )}
                 {/* Main Content */}
                 <div className="flex-1 overflow-auto">
-                    <div className="p-8">
+                    <div className="p-4 sm:p-8">
                         {renderContent()}
                     </div>
                 </div>

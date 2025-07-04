@@ -8,7 +8,9 @@ import {
   BellIcon,
   LifebuoyIcon,
   CreditCardIcon,
-  HomeIcon
+  HomeIcon,
+  Bars3Icon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 // Fix imports by using the feature exports
 import {
@@ -37,6 +39,7 @@ const AdminDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<AdminSection>('overview');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Handle URL-based navigation
   useEffect(() => {
@@ -109,13 +112,12 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       <div className="flex min-h-full">
-        {/* Sidebar */}
-        <div className="w-64 bg-white shadow-lg">
+        {/* Sidebar for desktop */}
+        <div className="hidden md:block w-64 bg-white shadow-lg">
           <div className="p-6 border-b border-gray-200">
             <h1 className="text-xl font-bold text-primary">Admin Panel</h1>
             <p className="text-sm text-gray-600">MEDVIET Platform</p>
           </div>
-
           <nav className="mt-6">
             {menuItems.map((item) => {
               const Icon = item.icon;
@@ -135,10 +137,45 @@ const AdminDashboard = () => {
             })}
           </nav>
         </div>
-
+        {/* Hamburger for mobile */}
+        <button className="md:hidden fixed top-20 left-4 z-50 bg-white rounded-full p-2 shadow-lg border border-gray-200" onClick={() => setSidebarOpen(true)}>
+          <Bars3Icon className="w-7 h-7 text-primary" />
+        </button>
+        {/* Sidebar overlay for mobile */}
+        {sidebarOpen && (
+          <div className="fixed inset-0 z-50 flex">
+            <div className="w-64 bg-white shadow-lg h-full flex flex-col">
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <span className="text-xl font-bold text-primary">Admin Panel</span>
+                <button onClick={() => setSidebarOpen(false)}>
+                  <XMarkIcon className="w-7 h-7 text-gray-500" />
+                </button>
+              </div>
+              <nav className="mt-4 flex-1 flex flex-col gap-1">
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => { handleSectionChange(item.id as AdminSection); setSidebarOpen(false); }}
+                      className={`w-full flex items-center px-6 py-4 text-lg text-left transition-colors rounded-lg mb-1 ${activeSection === item.id
+                        ? 'bg-primary text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                    >
+                      <Icon className="w-6 h-6 mr-3" />
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+            <div className="flex-1 bg-black/30" onClick={() => setSidebarOpen(false)} />
+          </div>
+        )}
         {/* Main Content */}
         <div className="flex-1 overflow-auto">
-          <div className="p-8">
+          <div className="p-4 sm:p-8">
             {renderContent()}
           </div>
         </div>

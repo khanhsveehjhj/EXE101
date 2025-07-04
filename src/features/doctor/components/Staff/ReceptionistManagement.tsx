@@ -74,6 +74,10 @@ const ReceptionistManagement = ({ doctorId }: ReceptionistManagementProps) => {
     setReceptionists(mockReceptionists);
   }, [doctorId]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const filteredReceptionists = receptionists.filter(receptionist =>
     receptionist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     receptionist.phone.includes(searchTerm) ||

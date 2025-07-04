@@ -135,6 +135,10 @@ const CheckInOut = () => {
         noShow: queueItems.filter(p => p.status === 'no-show').length
     };
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     return (
         <div className="space-y-6">
             {/* Header with real-time stats */}

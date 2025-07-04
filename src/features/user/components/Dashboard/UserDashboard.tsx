@@ -15,7 +15,7 @@ import Button from '@/components/UI/Button';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
-  const { state } = useApp();
+  const { state, dispatch } = useApp();
   const [activeTab, setActiveTab] = useState<'upcoming' | 'history' | 'profile'>('upcoming');
   const [userBookings, setUserBookings] = useState<Booking[]>([]);
 
@@ -29,6 +29,10 @@ const UserDashboard = () => {
     // Load user bookings
     setUserBookings(state.bookings.filter(booking => booking.patientId === state.auth.user?.id));
   }, [state.auth.isAuthenticated, state.bookings, state.auth.user?.id, navigate]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -82,6 +86,18 @@ const UserDashboard = () => {
   const pastBookings = userBookings.filter(booking =>
     booking.status === 'completed' || booking.status === 'cancelled'
   );
+
+  // Thêm hàm hủy lịch
+  const handleCancelBooking = (bookingId: string) => {
+    dispatch({ type: 'UPDATE_BOOKING', payload: { id: bookingId, updates: { status: 'cancelled' } } });
+    // Cập nhật localStorage
+    const updatedBookings = state.bookings.map(b =>
+      b.id === bookingId ? { ...b, status: 'cancelled' } : b
+    );
+    localStorage.setItem('userBookings', JSON.stringify(updatedBookings));
+    // Cập nhật lại danh sách booking hiển thị
+    setUserBookings(updatedBookings.filter(booking => booking.patientId === state.auth.user?.id));
+  };
 
   if (!state.auth.isAuthenticated) {
     return null;
@@ -181,7 +197,10 @@ const UserDashboard = () => {
                               Xem chi tiết
                             </button>
                             {booking.status === 'pending' && (
-                              <button className="px-3 py-1 text-sm border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+                              <button
+                                className="px-3 py-1 text-sm border border-red-300 text-red-600 rounded-md hover:bg-red-50 transition-colors"
+                                onClick={() => handleCancelBooking(booking.id)}
+                              >
                                 Hủy lịch
                               </button>
                             )}

@@ -337,6 +337,10 @@ const UserManagement = () => {
     setFormErrors({});
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Header */}
