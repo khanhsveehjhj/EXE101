@@ -27,7 +27,14 @@ const UserDashboard = () => {
     }
 
     // Load user bookings
-    setUserBookings(state.bookings.filter(booking => booking.patientId === state.auth.user?.id));
+    setUserBookings(
+      state.bookings.map(b => ({
+        ...b,
+        status: ['pending', 'confirmed', 'completed', 'cancelled'].includes(b.status)
+          ? b.status as Booking['status']
+          : 'pending', // or a default/fallback
+      }))
+    );
   }, [state.auth.isAuthenticated, state.bookings, state.auth.user?.id, navigate]);
 
   useEffect(() => {
@@ -96,7 +103,14 @@ const UserDashboard = () => {
     );
     localStorage.setItem('userBookings', JSON.stringify(updatedBookings));
     // Cập nhật lại danh sách booking hiển thị
-    setUserBookings(updatedBookings.filter(booking => booking.patientId === state.auth.user?.id));
+    setUserBookings(
+      updatedBookings.map(b => ({
+        ...b,
+        status: ['pending', 'confirmed', 'completed', 'cancelled'].includes(b.status)
+          ? b.status as Booking['status']
+          : 'pending', // or a default/fallback
+      }))
+    );
   };
 
   if (!state.auth.isAuthenticated) {

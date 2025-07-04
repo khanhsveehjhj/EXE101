@@ -5,10 +5,7 @@ import {
     PhoneIcon,
     ExclamationTriangleIcon,
     ArrowUpIcon,
-    ArrowDownIcon,
-    PlayIcon,
-    CheckCircleIcon,
-    XCircleIcon
+    ArrowDownIcon
 } from '@heroicons/react/24/outline';
 import { QueueItem } from '@/services/Types';
 import Button from '@/components/UI/Button';
